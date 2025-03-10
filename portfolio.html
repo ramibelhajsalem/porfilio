@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Albert — Frontend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a5c3a;
+    --lime: #b8f02a;
+    --cream: #f2eee6;
+    --dark: #111110;
+    --white: #fafaf8;
+    --muted: #888880;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  #cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--lime); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  #cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid var(--dark); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.35s cubic-bezier(.23,1,.32,1), opacity 0.2s;
+  }
+  body:hover #cursor-ring { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(242,238,230,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 1px;
+    color: var(--green);
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--dark);
+    text-decoration: none; opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 48px 80px 60px;
+    position: relative; z-index: 2;
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--green); margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 32px; height: 1.5px; background: var(--lime);
+  }
+  h1.big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 8vw, 110px);
+    line-height: 0.92;
+    color: var(--dark);
+    letter-spacing: -1px;
+  }
+  h1.big em { color: var(--green); font-style: normal; }
+  h1.big .outline {
+    -webkit-text-stroke: 2px var(--green);
+    color: transparent;
+  }
+  .hero-desc {
+    margin-top: 32px; max-width: 320px;
+    font-size: 15px; line-height: 1.7; color: #444;
+  }
+  .hero-cta {
+    margin-top: 40px; display: flex; gap: 16px; align-items: center;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none; border: none;
+    cursor: none; transition: all 0.25s;
+  }
+  .btn-primary {
+    background: var(--green); color: var(--lime);
+  }
+  .btn-primary:hover { background: var(--dark); }
+  .btn-outline {
+    background: transparent; color: var(--dark);
+    border: 1.5px solid var(--dark);
+  }
+  .btn-outline:hover { background: var(--dark); color: var(--cream); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: var(--green);
+  }
+  .hero-img-wrap {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .hero-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top;
+    mix-blend-mode: luminosity; opacity: 0.7;
+  }
+  .hero-noise {
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay; pointer-events: none;
+  }
+  .hero-badge {
+    position: absolute; bottom: 40px; right: 40px;
+    background: var(--lime); color: var(--dark);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px; letter-spacing: 2px;
+    padding: 12px 18px; z-index: 3;
+    transform: rotate(3deg);
+  }
+
+  .hero-scroll-hint {
+    position: absolute; bottom: 40px; left: 60px;
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: var(--muted);
+    animation: scroll-hint 2s ease-in-out infinite;
+  }
+  @keyframes scroll-hint {
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(0.3); opacity: 0.3; }
+  }
+
+  /* MARQUEE */
+  .marquee-bar {
+    background: var(--green); overflow: hidden;
+    padding: 14px 0;
+  }
+  .marquee-track {
+    display: flex; gap: 0; white-space: nowrap;
+    animation: marquee 18s linear infinite;
+  }
+  .marquee-item {
+    display: inline-flex; align-items: center; gap: 24px;
+    padding: 0 24px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+    letter-spacing: 2px; color: var(--lime);
+  }
+  .marquee-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--lime); border-radius: 50%; opacity: 0.5;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ═══════════════════════════════════════
+     WORKS — STICKY SCROLL SECTION
+  ═══════════════════════════════════════ */
+  #works { position: relative; }
+
+  .works-header {
+    padding: 80px 60px 40px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--green); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.9; color: var(--dark);
+  }
+  .works-count {
+    font-family: 'Bebas Neue', sans-serif; font-size: 80px;
+    color: transparent; -webkit-text-stroke: 1.5px var(--green);
+    opacity: 0.18; line-height: 1;
+  }
+
+  /* STICKY LAYOUT */
+  .sticky-works {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    position: relative;
+  }
+  .sticky-left {
+    position: sticky; top: 80px;
+    height: calc(100vh - 80px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 60px;
+    overflow: hidden;
+  }
+  .project-display {
+    position: relative;
+    width: 100%; max-width: 480px;
+  }
+  .project-screen {
+    width: 100%;
+    aspect-ratio: 3/2;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.06);
+    position: relative;
+    transition: all 0.7s cubic-bezier(.23,1,.32,1);
+  }
+  .project-screen-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 48px;
+    letter-spacing: 4px;
+    transition: all 0.7s cubic-bezier(.23,1,.32,1);
+    position: relative; overflow: hidden;
+  }
+  .project-screen-inner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
+    );
+    z-index: 1;
+  }
+  .project-tag-float {
+    position: absolute; top: -16px; right: -16px;
+    background: var(--lime); color: var(--dark);
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 8px 14px; z-index: 2;
+  }
+  .project-number-float {
+    position: absolute; bottom: -24px; left: 0;
+    font-family: 'Bebas Neue', sans-serif; font-size: 96px;
+    color: transparent; -webkit-text-stroke: 1.5px var(--dark);
+    opacity: 0.08; line-height: 1; z-index: 0;
+    pointer-events: none;
+  }
+  .project-meta-float {
+    margin-top: 28px; display: flex; justify-content: space-between;
+    align-items: flex-end;
+  }
+  .project-title-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; letter-spacing: 2px;
+    transition: all 0.5s;
+  }
+  .project-year {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* RIGHT SCROLL LIST */
+  .scroll-right {
+    padding: 60px 60px 60px 0;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .project-item {
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    cursor: none;
+    position: relative;
+    transition: padding-left 0.3s;
+  }
+  .project-item:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+  .project-item.active { padding-left: 20px; }
+  .project-item.active::before {
+    content: '';
+    position: absolute; left: 0; top: 50%;
+    width: 8px; height: 8px;
+    background: var(--lime); border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .pi-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+  .pi-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 1.5px;
+    transition: color 0.3s;
+  }
+  .project-item.active .pi-name { color: var(--green); }
+  .pi-arrow {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+  .project-item.active .pi-arrow {
+    background: var(--green); border-color: var(--green); color: var(--lime);
+  }
+  .pi-tags {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .pi-tag {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 10px; border: 1px solid rgba(0,0,0,0.12);
+    color: var(--muted);
+  }
+  .pi-desc {
+    margin-top: 12px; font-size: 14px; line-height: 1.6; color: #666;
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  }
+  .project-item.active .pi-desc { max-height: 80px; }
+
+  /* ═══ SWIPER SECTION ═══ */
+  #swiper-section {
+    padding: 80px 0;
+    background: var(--dark);
+    overflow: hidden;
+    position: relative;
+  }
+  .swiper-header {
+    padding: 0 60px 48px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .swiper-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 5vw, 72px);
+    color: var(--white); line-height: 0.9;
+  }
+  .swiper-title span { color: var(--lime); }
+  .swiper-controls {
+    display: flex; gap: 12px;
+  }
+  .swiper-btn {
+    width: 48px; height: 48px;
+    background: transparent; border: 1.5px solid rgba(255,255,255,0.2);
+    color: var(--white); font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: all 0.25s;
+  }
+  .swiper-btn:hover { background: var(--lime); color: var(--dark); border-color: var(--lime); }
+
+  .swiper-track-wrap { overflow: hidden; padding: 0 60px; }
+  .swiper-track {
+    display: flex; gap: 24px;
+    transition: transform 0.6s cubic-bezier(.23,1,.32,1);
+    will-change: transform;
+  }
+  .swiper-card {
+    flex: 0 0 calc(33.33% - 16px);
+    aspect-ratio: 4/5;
+    position: relative; overflow: hidden;
+    background: #1a1a18;
+    border-radius: 2px;
+    cursor: none;
+  }
+  .swiper-card:hover .card-overlay { opacity: 1; }
+  .swiper-card:hover .card-img { transform: scale(1.08); }
+  .card-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s cubic-bezier(.23,1,.32,1);
+  }
+  .card-mockup {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: transform 0.7s cubic-bezier(.23,1,.32,1);
+    position: relative;
+  }
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,92,58,0.95) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; align-items: flex-end; padding: 28px;
+  }
+  .card-info {}
+  .card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--white); letter-spacing: 1px;
+    display: block; margin-bottom: 4px;
+  }
+  .card-cat {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    color: var(--lime); letter-spacing: 2px; text-transform: uppercase;
+  }
+  .card-num {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 13px;
+    color: rgba(255,255,255,0.3); letter-spacing: 2px;
+  }
+
+  .swiper-progress {
+    padding: 28px 60px 0;
+    display: flex; gap: 6px;
+  }
+  .prog-dot {
+    height: 2px; flex: 1;
+    background: rgba(255,255,255,0.15); border-radius: 2px;
+    transition: background 0.3s, flex 0.3s;
+  }
+  .prog-dot.active {
+    background: var(--lime); flex: 2;
+  }
+
+  /* ═══ ABOUT ═══ */
+  #about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+  }
+  .about-left {
+    background: var(--green); padding: 80px 60px;
+    position: relative; overflow: hidden;
+  }
+  .about-left::before {
+    content: 'AB';
+    position: absolute; bottom: -20px; right: -10px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 180px;
+    color: rgba(255,255,255,0.04); line-height: 1;
+    pointer-events: none;
+  }
+  .about-img-placeholder {
+    width: 280px; height: 340px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    position: relative; overflow: hidden;
+  }
+  .about-img-placeholder::after {
+    content: 'ALBERT';
+    position: absolute; bottom: 16px; left: 16px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+    letter-spacing: 3px; color: rgba(255,255,255,0.4);
+  }
+  .about-right { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
+  .about-right .section-label { margin-bottom: 16px; }
+  .about-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px); line-height: 1;
+    margin-bottom: 28px;
+  }
+  .about-heading em { color: var(--green); font-style: normal; }
+  .about-text { font-size: 15px; line-height: 1.75; color: #555; max-width: 440px; }
+  .about-stats {
+    margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--green); line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ═══ TESTIMONIALS ═══ */
+  #testimonials { padding: 100px 60px; background: var(--cream); }
+  .test-header { margin-bottom: 60px; }
+  .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .test-card {
+    background: var(--white); padding: 40px;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.3s;
+  }
+  .test-card:hover { transform: translateY(-4px); }
+  .test-quote {
+    font-size: 32px; color: var(--lime); font-family: 'Bebas Neue', sans-serif;
+    margin-bottom: 16px;
+  }
+  .test-text {
+    font-size: 14px; line-height: 1.7; color: #555;
+    margin-bottom: 28px;
+  }
+  .test-author { display: flex; align-items: center; gap: 14px; }
+  .test-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%; overflow: hidden;
+    background: var(--green); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--lime);
+  }
+  .test-name {
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    font-weight: 700; letter-spacing: 0.5px;
+  }
+  .test-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* CTA */
+  #cta {
+    background: var(--dark); padding: 120px 60px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(26,92,58,0.4) 0%, transparent 70%);
+  }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 8vw, 120px);
+    color: var(--white); line-height: 0.9;
+    position: relative; z-index: 1;
+  }
+  .cta-title span { color: var(--lime); }
+  .cta-email {
+    display: block; margin: 48px auto 0;
+    font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+    letter-spacing: 3px; color: var(--lime);
+    text-decoration: none; position: relative; z-index: 1;
+    transition: letter-spacing 0.3s;
+  }
+  .cta-email:hover { letter-spacing: 6px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white);
+  }
+  .footer-copy {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; color: rgba(255,255,255,0.3);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; color: rgba(255,255,255,0.4);
+    text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--lime); }
+
+  /* SCROLL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(32px); transition: all 0.7s cubic-bezier(.23,1,.32,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* CARD COLORS */
+  .bg1 { background: linear-gradient(135deg, #2d7a4f, #1a5c3a); }
+  .bg2 { background: linear-gradient(135deg, #333, #111); }
+  .bg3 { background: linear-gradient(135deg, #7a4f2d, #5c3a1a); }
+  .bg4 { background: linear-gradient(135deg, #2d4f7a, #1a3a5c); }
+  .bg5 { background: linear-gradient(135deg, #4f7a2d, #3a5c1a); }
+  .bg6 { background: linear-gradient(135deg, #7a2d4f, #5c1a3a); }
+
+  @media (max-width: 768px) {
+    .hero, #about, .sticky-works { grid-template-columns: 1fr; }
+    .hero-right { height: 50vh; }
+    .sticky-left { position: relative; height: auto; top: auto; }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero-left, .about-left, .about-right, #testimonials { padding: 40px 24px; }
+    .works-header { padding: 60px 24px 28px; }
+    .scroll-right { padding: 40px 24px; }
+    .swiper-card { flex: 0 0 calc(80% - 12px); }
+    .test-grid { grid-template-columns: 1fr; }
+    #cta, footer { padding: 80px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">Albert</span>
+  <div class="nav-links">
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Frontend Developer</div>
+    <h1 class="big">
+      I BUILD<br>
+      <em>DIGITAL</em><br>
+      <span class="outline">WORLDS</span>
+    </h1>
+    <p class="hero-desc">A creative front-end developer with a strong focus on motion and interaction — turning ideas into unforgettable web experiences.</p>
+    <div class="hero-cta">
+      <a href="#works" class="btn btn-primary">View Works →</a>
+      <a href="#cta" class="btn btn-outline">Let's Talk</a>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-noise"></div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;">
+      <!-- Decorative background shape -->
+      <svg width="100%" height="100%" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;opacity:0.15">
+        <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="'Bebas Neue', sans-serif" font-size="200" fill="#b8f02a" opacity="0.3">&lt;/&gt;</text>
+      </svg>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,80px);color:#b8f02a;letter-spacing:4px;z-index:3;text-align:center;line-height:1.2;padding:20px;">
+        FRONT<br>END<br>DEV
+      </div>
+    </div>
+    <div class="hero-badge">Open to work</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">Vue.js <span class="marquee-dot"></span></span>
+    <span class="marquee-item">React <span class="marquee-dot"></span></span>
+    <span class="marquee-item">TypeScript <span class="marquee-dot"></span></span>
+    <span class="marquee-item">ASP.NET Core <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Motion Design <span class="marquee-dot"></span></span>
+    <span class="marquee-item">UI/UX <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Tailwind CSS <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Kotlin <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Vue.js <span class="marquee-dot"></span></span>
+    <span class="marquee-item">React <span class="marquee-dot"></span></span>
+    <span class="marquee-item">TypeScript <span class="marquee-dot"></span></span>
+    <span class="marquee-item">ASP.NET Core <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Motion Design <span class="marquee-dot"></span></span>
+    <span class="marquee-item">UI/UX <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Tailwind CSS <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Kotlin <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- WORKS — STICKY SCROLL -->
+<section id="works">
+  <div class="works-header reveal">
+    <div>
+      <div class="section-label">Selected Works</div>
+      <div class="section-title">PROJECTS</div>
+    </div>
+    <div class="works-count">06</div>
+  </div>
+
+  <div class="sticky-works">
+    <!-- LEFT STICKY DISPLAY -->
+    <div class="sticky-left">
+      <div class="project-display">
+        <div class="project-screen">
+          <div class="project-screen-inner bg1" id="display-screen">
+            <span style="color:rgba(184,240,42,0.8);z-index:2;position:relative;">REALITY</span>
+          </div>
+          <div class="project-tag-float" id="display-tag">Web App</div>
+        </div>
+        <div class="project-number-float" id="display-num">01</div>
+        <div class="project-meta-float">
+          <div class="project-title-display" id="display-title">Reality Affodils</div>
+          <div class="project-year" id="display-year">2024</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SCROLL LIST -->
+    <div class="scroll-right" id="project-list">
+
+      <div class="project-item active" data-index="0"
+           data-bg="bg1" data-label="Web App"
+           data-title="Reality Affodils" data-year="2024"
+           data-content="REALITY" data-color="rgba(184,240,42,0.8)">
+        <div class="pi-top">
+          <div class="pi-name">Reality Affodils</div>
+          <div class="pi-arrow">→</div>
+        </div>
+        <div class="pi-tags">
+          <span class="pi-tag">Vue.js</span>
+          <span class="pi-tag">3D</span>
+          <span class="pi-tag">WebGL</span>
+        </div>
+        <div class="pi-desc">An immersive 3D product experience built with Three.js and Vue, exploring augmented reality shopping concepts.</div>
+      </div>
+
+      <div class="project-item" data-index="1"
+           data-bg="bg2" data-label="Branding"
+           data-title="Airma Consult" data-year="2024"
+           data-content="AIRMA" data-color="rgba(184,240,42,0.8)">
+        <div class="pi-top">
+          <div class="pi-name">Airma Consult</div>
+          <div class="pi-arrow">→</div>
+        </div>
+        <div class="pi-tags">
+          <span class="pi-tag">React</span>
+          <span class="pi-tag">Branding</span>
+          <span class="pi-tag">Motion</span>
+        </div>
+        <div class="pi-desc">Brand identity and digital platform for a consulting firm — blending editorial design with functional clarity.</div>
+      </div>
+
+      <div class="project-item" data-index="2"
+           data-bg="bg3" data-label="E-Commerce"
+           data-title="Tradicional Jardin" data-year="2023"
+           data-content="JARDIN" data-color="rgba(255,200,80,0.9)">
+        <div class="pi-top">
+          <div class="pi-name">Tradicional Jardin</div>
+          <div class="pi-arrow">→</div>
+        </div>
+        <div class="pi-tags">
+          <span class="pi-tag">Shopify</span>
+          <span class="pi-tag">CSS</span>
+          <span class="pi-tag">Animation</span>
+        </div>
+        <div class="pi-desc">A premium garden e-commerce experience with scroll-driven animations and custom product configurators.</div>
+      </div>
+
+      <div class="project-item" data-index="3"
+           data-bg="bg4" data-label="SaaS"
+           data-title="CandidatApp" data-year="2024"
+           data-content="CANDIDAT" data-color="rgba(100,180,255,0.9)">
+        <div class="pi-top">
+          <div class="pi-name">CandidatApp</div>
+          <div class="pi-arrow">→</div>
+        </div>
+        <div class="pi-tags">
+          <span class="pi-tag">Vue 3</span>
+          <span class="pi-tag">ASP.NET</span>
+          <span class="pi-tag">Pinia</span>
+        </div>
+        <div class="pi-desc">Full-stack recruitment platform with real-time features, Cloudinary uploads, and a sophisticated Pinia store architecture.</div>
+      </div>
+
+      <div class="project-item" data-index="4"
+           data-bg="bg5" data-label="Mobile"
+           data-title="MindMap AI" data-year="2024"
+           data-content="MINDMAP" data-color="rgba(150,255,100,0.9)">
+        <div class="pi-top">
+          <div class="pi-name">MindMap AI</div>
+          <div class="pi-arrow">→</div>
+        </div>
+        <div class="pi-tags">
+          <span class="pi-tag">Kotlin</span>
+          <span class="pi-tag">KMM</span>
+          <span class="pi-tag">AI</span>
+        </div>
+        <div class="pi-desc">Cross-platform AI-powered note-taking app with CRDT sync strategy, MVI architecture, and a bold VOID GRAPH visual theme.</div>
+      </div>
+
+      <div class="project-item" data-index="5"
+           data-bg="bg6" data-label="Experiment"
+           data-title="AI Agent Studio" data-year="2024"
+           data-content="AGENT" data-color="rgba(255,150,200,0.9)">
+        <div class="pi-top">
+          <div class="pi-name">AI Agent Studio</div>
+          <div class="pi-arrow">→</div>
+        </div>
+        <div class="pi-tags">
+          <span class="pi-tag">Java</span>
+          <span class="pi-tag">ReAct</span>
+          <span class="pi-tag">LLM</span>
+        </div>
+        <div class="pi-desc">A ReAct-pattern AI agent with short-term, long-term, and episodic memory types — built as a single-file Java implementation.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SWIPER SECTION -->
+<section id="swiper-section">
+  <div class="swiper-header reveal">
+    <div>
+      <div class="section-label" style="color:var(--lime);opacity:0.7;">Featured Gallery</div>
+      <div class="swiper-title">VISUAL<br><span>SHOWCASE</span></div>
+    </div>
+    <div class="swiper-controls">
+      <button class="swiper-btn" id="prev">←</button>
+      <button class="swiper-btn" id="next">→</button>
+    </div>
+  </div>
+
+  <div class="swiper-track-wrap">
+    <div class="swiper-track" id="swiper-track">
+
+      <div class="swiper-card">
+        <div class="card-mockup bg1">
+          <svg width="70%" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="220" height="140" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <rect x="20" y="20" width="120" height="8" rx="2" fill="rgba(184,240,42,0.4)"/>
+            <rect x="20" y="34" width="80" height="6" rx="2" fill="rgba(255,255,255,0.2)"/>
+            <rect x="20" y="54" width="200" height="60" rx="4" fill="rgba(255,255,255,0.06)"/>
+            <text x="120" y="90" text-anchor="middle" dominant-baseline="middle" font-family="'Bebas Neue',sans-serif" font-size="28" fill="rgba(184,240,42,0.6)">3D VIEWER</text>
+            <rect x="20" y="126" width="60" height="14" rx="7" fill="rgba(184,240,42,0.5)"/>
+          </svg>
+        </div>
+        <div class="card-overlay">
+          <div class="card-info">
+            <span class="card-name">Reality Affodils</span>
+            <span class="card-cat">WebGL · Vue.js</span>
+          </div>
+        </div>
+        <span class="card-num">01/06</span>
+      </div>
+
+      <div class="swiper-card">
+        <div class="card-mockup bg2">
+          <svg width="70%" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="220" height="140" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <circle cx="120" cy="60" r="30" fill="none" stroke="rgba(184,240,42,0.5)" stroke-width="1.5"/>
+            <circle cx="120" cy="60" r="15" fill="rgba(184,240,42,0.2)"/>
+            <rect x="20" y="100" width="200" height="8" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="20" y="114" width="140" height="8" rx="2" fill="rgba(255,255,255,0.05)"/>
+            <text x="120" y="140" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="14" fill="rgba(184,240,42,0.4)" letter-spacing="3">AIRMA</text>
+          </svg>
+        </div>
+        <div class="card-overlay">
+          <div class="card-info">
+            <span class="card-name">Airma Consult</span>
+            <span class="card-cat">Branding · React</span>
+          </div>
+        </div>
+        <span class="card-num">02/06</span>
+      </div>
+
+      <div class="swiper-card">
+        <div class="card-mockup bg3">
+          <svg width="70%" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="220" height="140" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,200,80,0.2)" stroke-width="1"/>
+            <rect x="20" y="20" width="50" height="60" rx="3" fill="rgba(255,200,80,0.15)"/>
+            <rect x="80" y="20" width="50" height="60" rx="3" fill="rgba(255,200,80,0.2)"/>
+            <rect x="140" y="20" width="50" height="60" rx="3" fill="rgba(255,200,80,0.12)"/>
+            <rect x="20" y="94" width="170" height="6" rx="2" fill="rgba(255,255,255,0.1)"/>
+            <rect x="20" y="106" width="100" height="6" rx="2" fill="rgba(255,255,255,0.07)"/>
+            <rect x="20" y="122" width="70" height="16" rx="8" fill="rgba(255,200,80,0.4)"/>
+          </svg>
+        </div>
+        <div class="card-overlay">
+          <div class="card-info">
+            <span class="card-name">Tradicional Jardin</span>
+            <span class="card-cat">E-Commerce · Shopify</span>
+          </div>
+        </div>
+        <span class="card-num">03/06</span>
+      </div>
+
+      <div class="swiper-card">
+        <div class="card-mockup bg4">
+          <svg width="70%" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="220" height="140" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(100,180,255,0.2)" stroke-width="1"/>
+            <rect x="20" y="20" width="60" height="120" rx="3" fill="rgba(100,180,255,0.1)" stroke="rgba(100,180,255,0.15)" stroke-width="1"/>
+            <rect x="92" y="20" width="138" height="55" rx="3" fill="rgba(100,180,255,0.1)"/>
+            <rect x="92" y="85" width="138" height="55" rx="3" fill="rgba(255,255,255,0.04)"/>
+            <text x="155" y="50" text-anchor="middle" dominant-baseline="middle" font-family="'Bebas Neue',sans-serif" font-size="16" fill="rgba(100,180,255,0.6)" letter-spacing="2">CANDIDAT</text>
+          </svg>
+        </div>
+        <div class="card-overlay">
+          <div class="card-info">
+            <span class="card-name">CandidatApp</span>
+            <span class="card-cat">SaaS · Vue 3</span>
+          </div>
+        </div>
+        <span class="card-num">04/06</span>
+      </div>
+
+      <div class="swiper-card">
+        <div class="card-mockup bg5">
+          <svg width="70%" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="120" cy="70" r="40" fill="none" stroke="rgba(150,255,100,0.3)" stroke-width="1"/>
+            <circle cx="120" cy="70" r="25" fill="none" stroke="rgba(150,255,100,0.2)" stroke-width="1"/>
+            <circle cx="120" cy="70" r="8" fill="rgba(150,255,100,0.4)"/>
+            <line x1="120" y1="30" x2="80" y2="110" stroke="rgba(150,255,100,0.2)" stroke-width="1"/>
+            <line x1="120" y1="30" x2="160" y2="110" stroke="rgba(150,255,100,0.2)" stroke-width="1"/>
+            <line x1="80" y1="110" x2="160" y2="110" stroke="rgba(150,255,100,0.2)" stroke-width="1"/>
+            <text x="120" y="145" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="12" fill="rgba(150,255,100,0.5)" letter-spacing="3">MINDMAP AI</text>
+          </svg>
+        </div>
+        <div class="card-overlay">
+          <div class="card-info">
+            <span class="card-name">MindMap AI</span>
+            <span class="card-cat">Mobile · KMM</span>
+          </div>
+        </div>
+        <span class="card-num">05/06</span>
+      </div>
+
+      <div class="swiper-card">
+        <div class="card-mockup bg6">
+          <svg width="70%" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="220" height="140" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,150,200,0.2)" stroke-width="1"/>
+            <rect x="20" y="20" width="200" height="24" rx="3" fill="rgba(255,150,200,0.1)"/>
+            <text x="120" y="33" text-anchor="middle" dominant-baseline="middle" font-family="'Space Mono',monospace" font-size="9" fill="rgba(255,150,200,0.6)">THINK → ACT → OBSERVE</text>
+            <rect x="20" y="54" width="200" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="20" y="66" width="160" height="6" rx="2" fill="rgba(255,255,255,0.06)"/>
+            <rect x="20" y="78" width="180" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="20" y="104" width="80" height="20" rx="3" fill="rgba(255,150,200,0.2)"/>
+            <rect x="110" y="104" width="110" height="20" rx="3" fill="rgba(255,255,255,0.06)"/>
+          </svg>
+        </div>
+        <div class="card-overlay">
+          <div class="card-info">
+            <span class="card-name">AI Agent Studio</span>
+            <span class="card-cat">AI · Java · ReAct</span>
+          </div>
+        </div>
+        <span class="card-num">06/06</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="swiper-progress" id="swiper-progress">
+    <div class="prog-dot active"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+    <div class="prog-dot"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="reveal">
+  <div class="about-left">
+    <div class="about-img-placeholder"></div>
+  </div>
+  <div class="about-right">
+    <div class="section-label">About Me</div>
+    <h2 class="about-heading">CREATIVE<br>DEVELOPER<br><em>BY NATURE</em></h2>
+    <p class="about-text">I'm a full-stack developer obsessed with the intersection of design and engineering. From Vue 3 SPAs to Kotlin Multiplatform apps, I build things that move, feel alive, and solve real problems. Currently exploring AI-powered applications and real-time collaborative experiences.</p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years crafting</div>
+      </div>
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Curiosity level</div>
+      </div>
+      <div>
+        <div class="stat-num">01</div>
+        <div class="stat-label">Focused vision</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="test-header reveal">
+    <div class="section-label">Kind Words</div>
+    <div class="section-title">WHAT PEOPLE<br>SAY ABOUT ME</div>
+  </div>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-quote">"</div>
+      <p class="test-text">Working with Albert was a game-changer. He doesn't just understand your business goals — he elevates them through elegant, functional design that feels truly bespoke.</p>
+      <div class="test-author">
+        <div class="test-avatar">LA</div>
+        <div>
+          <div class="test-name">Leslie Alexander</div>
+          <div class="test-role">Founder & CEO — Drift Studio</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-quote">"</div>
+      <p class="test-text">The level of craft Albert brings to every pixel is rare. He transformed our clunky SaaS dashboard into something our users actually love opening every morning.</p>
+      <div class="test-author">
+        <div class="test-avatar">EW</div>
+        <div>
+          <div class="test-name">Esther Williams</div>
+          <div class="test-role">Product Lead — Financer</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-quote">"</div>
+      <p class="test-text">Shipped on time, beyond expectations. Albert's ability to communicate complex technical constraints while never losing the design vision is genuinely impressive.</p>
+      <div class="test-author">
+        <div class="test-avatar">MK</div>
+        <div>
+          <div class="test-name">Marcus Klein</div>
+          <div class="test-role">CTO — Bloom Technologies</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-title reveal">HAVE AN IDEA?<br><span>LET'S BUILD IT.</span></div>
+  <a href="mailto:info@albert.com" class="cta-email reveal">INFO@ALBERT.COM</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Albert</span>
+  <span class="footer-copy">© 2024 Albert — All rights reserved</span>
+  <div class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+// STICKY WORKS
+const items = document.querySelectorAll('.project-item');
+const screen = document.getElementById('display-screen');
+const tag = document.getElementById('display-tag');
+const title = document.getElementById('display-title');
+const num = document.getElementById('display-num');
+const year = document.getElementById('display-year');
+
+const projects = [
+  { bg: 'bg1', label: 'Web App',   title: 'Reality Affodils', year: '2024', content: 'REALITY',  color: 'rgba(184,240,42,0.8)' },
+  { bg: 'bg2', label: 'Branding',  title: 'Airma Consult',    year: '2024', content: 'AIRMA',    color: 'rgba(184,240,42,0.8)' },
+  { bg: 'bg3', label: 'E-Commerce',title: 'Tradicional Jardin',year:'2023', content: 'JARDIN',   color: 'rgba(255,200,80,0.9)' },
+  { bg: 'bg4', label: 'SaaS',      title: 'CandidatApp',      year: '2024', content: 'CANDIDAT', color: 'rgba(100,180,255,0.9)' },
+  { bg: 'bg5', label: 'Mobile',    title: 'MindMap AI',       year: '2024', content: 'MINDMAP',  color: 'rgba(150,255,100,0.9)' },
+  { bg: 'bg6', label: 'Experiment',title: 'AI Agent Studio',  year: '2024', content: 'AGENT',    color: 'rgba(255,150,200,0.9)' },
+];
+
+let activeIdx = 0;
+
+function setProject(idx) {
+  if (idx === activeIdx) return;
+  activeIdx = idx;
+  const p = projects[idx];
+
+  // Update screen
+  screen.className = 'project-screen-inner ' + p.bg;
+  screen.innerHTML = `<span style="color:${p.color};z-index:2;position:relative;font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,52px);letter-spacing:4px;">${p.content}</span>`;
+  tag.textContent = p.label;
+  title.textContent = p.title;
+  year.textContent = p.year;
+  num.textContent = String(idx + 1).padStart(2, '0');
+
+  items.forEach((item, i) => item.classList.toggle('active', i === idx));
+}
+
+// Intersection observer for scroll-trigger
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = parseInt(entry.target.dataset.index);
+      setProject(idx);
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+
+items.forEach(item => {
+  observer.observe(item);
+  item.addEventListener('click', () => setProject(parseInt(item.dataset.index)));
+});
+
+// SWIPER
+const track = document.getElementById('swiper-track');
+const dots = document.querySelectorAll('.prog-dot');
+const cards = track.querySelectorAll('.swiper-card');
+let current = 0;
+const visibleCards = () => window.innerWidth < 768 ? 1 : 3;
+
+function updateSwiper() {
+  const cardW = cards[0].offsetWidth + 24;
+  track.style.transform = `translateX(-${current * cardW}px)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+document.getElementById('next').addEventListener('click', () => {
+  current = Math.min(current + 1, cards.length - visibleCards());
+  updateSwiper();
+});
+document.getElementById('prev').addEventListener('click', () => {
+  current = Math.max(current - 1, 0);
+  updateSwiper();
+});
+
+// Touch swipe
+let startX = 0;
+track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+track.addEventListener('touchend', e => {
+  const dx = startX - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 40) {
+    if (dx > 0) current = Math.min(current + 1, cards.length - visibleCards());
+    else current = Math.max(current - 1, 0);
+    updateSwiper();
+  }
+});
+
+// REVEAL
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// Stagger reveal for cards and test
+document.querySelectorAll('.test-card').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.1}s`;
+});
+</script>
+</body>
+</html>
