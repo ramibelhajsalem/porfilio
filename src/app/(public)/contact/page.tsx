@@ -80,18 +80,18 @@ function AnimatedInput({
   const isActive = focused || value.length > 0;
 
   const baseClass =
-    "w-full bg-transparent border-b border-cream-500/15 pb-3 pt-7 text-cream-100 text-sm md:text-base outline-none transition-colors duration-300 placeholder-transparent";
+    "w-full bg-transparent border-b border-cream-500/30 pb-3 pt-7 text-cream-100 text-sm md:text-base outline-none transition-colors duration-300 placeholder-transparent";
 
   return (
     <div className="relative group">
       {/* Label */}
       <motion.label
         htmlFor={name}
-        className="absolute left-0 text-cream-400/50 uppercase tracking-[0.12em] text-[0.6rem] md:text-[0.65rem] pointer-events-none origin-left font-medium"
+        className="absolute left-0 text-cream-400/70 uppercase tracking-[0.12em] text-[0.6rem] md:text-[0.65rem] pointer-events-none origin-left font-medium"
         animate={{
           y: isActive ? 0 : 22,
           scale: isActive ? 1 : 1.05,
-          opacity: isActive ? 0.8 : 0.35,
+          opacity: isActive ? 1 : 0.55,
         }}
         transition={{ duration: 0.2, ease: "easeOut" }}
       >
@@ -152,7 +152,7 @@ function BudgetPill({
       className={`px-5 py-2.5 rounded-full text-[0.6rem] uppercase tracking-[0.12em] font-medium border transition-all duration-300 cursor-pointer ${
         selected
           ? "bg-lime text-teal-900 border-lime"
-          : "bg-transparent text-cream-300/40 border-cream-500/12 hover:border-cream-400/25 hover:text-cream-200"
+          : "bg-transparent text-cream-300/65 border-cream-500/25 hover:border-cream-400/40 hover:text-cream-200"
       }`}
       onClick={onClick}
       whileTap={{ scale: 0.95 }}
@@ -230,7 +230,7 @@ function CopyEmail() {
   return (
     <button
       onClick={handleCopy}
-      className="inline-flex items-center gap-2 text-cream-300/40 hover:text-lime transition-colors duration-300 cursor-pointer"
+      className="inline-flex items-center gap-2 text-cream-300/60 hover:text-lime transition-colors duration-300 cursor-pointer"
     >
       <AnimatePresence mode="wait">
         {copied ? (
@@ -595,7 +595,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
             >
               {/* Form card with glass border */}
-              <div className="relative rounded-2xl border border-cream-500/[0.06] bg-cream-50/[0.015] p-6 md:p-10 lg:p-12">
+              <div className="relative rounded-2xl border border-cream-500/[0.12] bg-cream-50/[0.015] p-6 md:p-10 lg:p-12">
                 {/* Corner accent */}
                 <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden rounded-tr-2xl">
                   <div className="absolute top-0 right-0 w-[1px] h-12 bg-gradient-to-b from-lime/40 to-transparent" />
@@ -605,7 +605,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
                   {/* Form top bar */}
                   <div className="flex items-center justify-between pb-2">
-                    <p className="text-cream-400/40 text-[0.55rem] uppercase tracking-[0.2em] font-medium">
+                    <p className="text-cream-400/65 text-[0.55rem] uppercase tracking-[0.2em] font-medium">
                       Project details
                     </p>
                     <div className="flex items-center gap-2">
@@ -656,7 +656,7 @@ export default function ContactPage() {
 
                   {/* Budget pills */}
                   <div>
-                    <p className="text-cream-400/50 text-[0.6rem] uppercase tracking-[0.12em] mb-4 font-medium">
+                    <p className="text-cream-400/70 text-[0.6rem] uppercase tracking-[0.12em] mb-4 font-medium">
                       Project budget
                     </p>
                     <div className="flex flex-wrap gap-2.5">
@@ -704,7 +704,7 @@ export default function ContactPage() {
                       )}
                     </AnimatePresence>
 
-                    <p className="text-cream-400/25 text-[0.5rem] uppercase tracking-[0.15em] max-w-[200px]">
+                    <p className="text-cream-400/45 text-[0.5rem] uppercase tracking-[0.15em] max-w-[200px]">
                       I typically respond within 24 hours
                     </p>
                   </div>
