@@ -52,10 +52,10 @@ export const siteConfig = {
  * Navigation Links
  */
 export const navLinks = [
-  { label: "Works", href: "#works" },
+  { label: "Works", href: "/works" },
   { label: "About", href: "#about" },
   { label: "Testimonial", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const socialLinks = [

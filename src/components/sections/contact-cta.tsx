@@ -18,15 +18,13 @@ export default function ContactCTA() {
               Idea?
             </h2>
 
-            <motion.a
-              href="#"
-              className="inline-flex items-center gap-3 border-2 border-teal-700/40 text-teal-800 px-6 py-3 rounded-full text-[0.65rem] font-medium uppercase tracking-[0.15em] hover:bg-teal-700 hover:text-cream-50 hover:border-teal-700 transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-3 border-2 border-teal-700/40 text-teal-800 px-6 py-3 rounded-full text-[0.65rem] font-medium uppercase tracking-[0.15em] hover:bg-teal-700 hover:text-cream-50 hover:border-teal-700 transition-all duration-300 group hover:scale-105 active:scale-95 transition-transform"
             >
-              <Link href="/contact">Send Me A Request</Link>
+              Send Me A Request
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </motion.a>
+            </Link>
           </motion.div>
 
           {/* Right: Description + Tell me */}

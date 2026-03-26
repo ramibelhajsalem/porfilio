@@ -84,7 +84,7 @@ export default function Hero() {
             <div className="relative">
               <div className="w-64 sm:w-72 md:w-80 lg:w-96 aspect-[620/720] relative rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white/60">
                 <Image
-                  src="/images/user.png"
+                  src="/images/user1.png"
                   alt="Albert - Front-End Developer"
                   fill
                   priority

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { navLinks, socialLinks } from "@/lib/constants";
+import Link from "next/link";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,12 +27,12 @@ export default function Navbar() {
           <ul className="flex items-center gap-0">
             {navLinks.map((link) => (
               <li key={link.label}>
-                <a
+                <Link
                   href={link.href}
                   className="text-[0.72rem] font-medium text-black/85 transition-colors uppercase tracking-[0.09em] px-5 py-1.5 rounded-full block"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
