@@ -5,8 +5,20 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Navbar from "./navbar";
 import BackgroundWaves from "@/components/backgorundWaves";
+import type { HeroSectionContent } from "@/lib/supabase/types";
 
-export default function Hero() {
+const DEFAULT: HeroSectionContent = {
+  greeting: "Hi there, I'm Albert 👋",
+  name: "Albert",
+  title_word1: "Front",
+  title_word2: "End",
+  title_word3: "Developer",
+  bio: "I am a creative front-end developer with a strong focus on motion and interaction.",
+  photo_url: "/images/user1.png",
+  photo_alt: "Albert - Front-End Developer",
+};
+
+export default function Hero({ content = DEFAULT }: { content?: HeroSectionContent }) {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -52,8 +64,7 @@ export default function Hero() {
             style={{ opacity: textOpacity }}
           >
             <h1 className="inline-flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-semibold text-teal-800 tracking-[-1px] font-display uppercase">
-              Hi there, I&apos;m Albert
-              <span className="text-3xl sm:text-4xl md:text-5xl">👋</span>
+              {content.greeting}
             </h1>
           </motion.div>
 
@@ -69,7 +80,7 @@ export default function Hero() {
               className="font-display text-teal-700 text-[15vw] sm:text-[12vw] lg:text-[10vw] leading-[0.85] font-bold tracking-[-6px] uppercase"
               style={{ textShadow: "2px 5px 0px rgba(0,0,0,0.2)" }}
             >
-              Front
+              {content.title_word1}
             </span>
           </motion.div>
 
@@ -84,8 +95,8 @@ export default function Hero() {
             <div className="relative">
               <div className="w-64 sm:w-72 md:w-80 lg:w-96 aspect-[620/720] relative rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white/60">
                 <Image
-                  src="/images/user1.png"
-                  alt="Albert - Front-End Developer"
+                  src={content.photo_url || "/images/user1.png"}
+                  alt={content.photo_alt || "Profile photo"}
                   fill
                   priority
                   className="object-cover object-top"
@@ -119,7 +130,7 @@ export default function Hero() {
               className="font-display text-teal-700 text-[15vw] sm:text-[12vw] lg:text-[10vw] leading-[0.85] font-bold tracking-[-6px] uppercase"
               style={{ textShadow: "2px 5px 0px rgba(0,0,0,0.2)" }}
             >
-              End
+              {content.title_word2}
             </span>
           </motion.div>
 
@@ -135,7 +146,7 @@ export default function Hero() {
               className="inline-block font-display text-teal-700 text-[13vw] sm:text-[10vw] lg:text-[9vw] leading-none font-bold tracking-[-4px] uppercase"
               style={{ textShadow: "2px 5px 0px rgba(0,0,0,0.2)" }}
             >
-              Developer
+              {content.title_word3}
             </span>
           </motion.div>
 
@@ -147,7 +158,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             style={{ y: bioY, opacity: textOpacity }}
           >
-            I am a creative front-end developer with a strong focus on motion and interaction.
+            {content.bio}
           </motion.p>
         </div>
       </div>

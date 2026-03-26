@@ -2,15 +2,15 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { testimonials } from "@/lib/constants";
+import type { Testimonial } from "@/lib/supabase/types";
 import { scrollReveal, staggerContainer, animationVariants } from "@/lib/utils";
 
-const avatars = [
+const fallbackAvatars = [
   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=250&fit=crop&crop=faces",
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=250&fit=crop&crop=faces",
 ];
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
   return (
     <section id="testimonials" className="bg-cream-50 py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
@@ -32,7 +32,7 @@ export default function Testimonials() {
         >
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={index}
+              key={testimonial.id}
               className="flex gap-4 md:gap-6"
               variants={animationVariants.slideUp}
             >
@@ -40,8 +40,8 @@ export default function Testimonials() {
               <div className="flex-shrink-0">
                 <div className="relative w-16 h-20 md:w-24 md:h-28 rounded-xl overflow-hidden shadow-sm">
                   <Image
-                    src={avatars[index]}
-                    alt={testimonial.name}
+                    src={testimonial.avatar_url ?? fallbackAvatars[index % fallbackAvatars.length]}
+                    alt={testimonial.client_name}
                     fill
                     className="object-cover"
                     sizes="96px"
@@ -56,10 +56,11 @@ export default function Testimonials() {
                 </p>
                 <div>
                   <h4 className="font-display text-sm md:text-base font-bold text-teal-700 uppercase">
-                    {testimonial.name}
+                    {testimonial.client_name}
                   </h4>
                   <p className="text-[10px] md:text-xs text-teal-600 uppercase tracking-wider">
-                    {testimonial.role}
+                    {testimonial.client_role}
+                    {testimonial.client_company ? ` · ${testimonial.client_company}` : ""}
                   </p>
                 </div>
               </div>

@@ -4,8 +4,21 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { scrollReveal } from "@/lib/utils";
+import type { AboutSectionContent } from "@/lib/supabase/types";
 
-export default function About() {
+const DEFAULT: AboutSectionContent = {
+  headline1: "Passionate",
+  headline2: "About Development",
+  passion_description: "Innovation and storytelling. Interested about conception and creating interactive experiences.",
+  work_experience_title: "Work Experience",
+  work_experience_text: "Theo is a student in interactive development at Goblins and is currently doing his apprenticeship",
+  about_description: "An adept of Scandinavian culture and lifestyle. He draws daily inspiration from their minimalist philosophy and has developed",
+  inline_image_url: "https://images.unsplash.com/photo-1685062428479-e310b7851de5?w=300&h=300",
+  grid_image1_url: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=500&fit=crop",
+  grid_image2_url: "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=400&h=500&fit=crop",
+};
+
+export default function About({ content = DEFAULT }: { content?: AboutSectionContent }) {
   return (
     <section id="about" className="bg-white py-16 md:py-24 overflow-hidden rounded-2xl">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
@@ -17,7 +30,7 @@ export default function About() {
             {...scrollReveal}
           >
             <h2 className=" font-display text-[4.5rem] md:text-[4rem] lg:text-[6.5rem] font-bold text-teal-700 uppercase leading-[0.85] tracking-tighter">
-              Passionate
+              {content.headline1}
             </h2>
           </motion.div>
 
@@ -31,7 +44,7 @@ export default function About() {
           >
             <div className="relative w-full aspect-square rounded-xl overflow-hidden shadow-md">
               <Image
-                src={`${"https://images.unsplash.com/photo-1685062428479-e310b7851de5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fEFuZHJvaWR8ZW58MHx8MHx8fDA%3D"}?w=300&h=300`}
+                src={content.inline_image_url}
                 alt="3D design elements"
                 fill
                 className=" object-cover"
@@ -49,7 +62,7 @@ export default function About() {
             viewport={{ once: true }}
           >
             <p className="text-[0.6rem] text-teal-800/60 leading-relaxed uppercase tracking-[0.12em] max-w-[240px]">
-              Innovation and storytelling. Interested about conception and creating interactive experiences.
+              {content.passion_description}
             </p>
           </motion.div>
         </div>
@@ -63,7 +76,7 @@ export default function About() {
           viewport={{ once: true }}
         >
           <h2 className="font-display text-[2.5rem] md:text-[4rem] lg:text-[6.5rem] font-bold text-teal-700 uppercase leading-[0.85] tracking-tighter md:pl-[15%]">
-            About Development
+            {content.headline2}
           </h2>
         </motion.div>
 
@@ -78,7 +91,7 @@ export default function About() {
           >
             <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden shadow-md -rotate-3">
               <Image
-                src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=500&fit=crop"
+                src={content.grid_image1_url}
                 alt="3D colorful shapes"
                 fill
                 className="object-cover"
@@ -96,11 +109,11 @@ export default function About() {
             viewport={{ once: true }}
           >
             <h3 className="font-display text-xs md:text-sm font-bold text-teal-800 uppercase tracking-wider mb-3">
-              Work Experience
+              {content.work_experience_title}
             </h3>
             <div className="w-10 h-[1.5px] bg-teal-800/30 mb-4" />
             <p className="text-[0.6rem] text-teal-800/60 leading-relaxed uppercase tracking-[0.12em]">
-              Theo is a student in interactive development at Goblins and is currently doing his apprenticeship
+              {content.work_experience_text}
             </p>
           </motion.div>
 
@@ -114,7 +127,7 @@ export default function About() {
           >
             <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden shadow-md">
               <Image
-                src="https://images.unsplash.com/photo-1605379399642-870262d3d051?w=400&h=500&fit=crop"
+                src={content.grid_image2_url}
                 alt="Green glowing 3D cube"
                 fill
                 className="object-cover"
@@ -132,7 +145,7 @@ export default function About() {
             viewport={{ once: true }}
           >
             <p className="text-[0.6rem] text-teal-800/60 leading-relaxed uppercase tracking-[0.12em] mb-6">
-              An adept of Scandinavian culture and lifestyle. He draws daily inspiration from their minimalist philosophy and has developed
+              {content.about_description}
             </p>
             <motion.a
               href="#"

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useTransition } from "react";
+import { submitContact } from "@/lib/supabase/actions";
 import {
   motion,
   useMotionValue,
@@ -347,6 +348,8 @@ export default function ContactPage() {
   });
   const [budget, setBudget] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -360,8 +363,25 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setSubmitError(null);
+    startTransition(async () => {
+      const result = await submitContact({
+        name: form.name,
+        email: form.email,
+        company: form.company || undefined,
+        project_type: form.projectType || undefined,
+        budget: budget || undefined,
+        message: form.message,
+      });
+      if (result?.error) {
+        setSubmitError(result.error);
+      } else {
+        setSubmitted(true);
+        setForm({ name: "", email: "", company: "", projectType: "", message: "" });
+        setBudget(null);
+        setTimeout(() => setSubmitted(false), 4000);
+      }
+    });
   };
 
   return (

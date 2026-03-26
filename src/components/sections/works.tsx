@@ -8,8 +8,8 @@ import {
 } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { projects } from "@/lib/constants";
 import { scrollReveal } from "@/lib/utils";
+import type { Project } from "@/lib/supabase/types";
 import Link from "next/link";
 
 /* ── Card dimensions ── */
@@ -34,7 +34,7 @@ const cardVariants = {
   },
 };
 
-export default function Works() {
+export default function Works({ projects }: { projects: Project[] }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -175,7 +175,7 @@ function ProjectCard({
   project,
   index,
 }: {
-  project: (typeof projects)[number];
+  project: Project;
   index: number;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -220,7 +220,7 @@ function ProjectCard({
         {/* Image area */}
         <div className="relative h-[280px] overflow-hidden">
           <Image
-            src={project.image}
+            src={project.image_url ?? "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=700&fit=crop"}
             alt={project.title}
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"

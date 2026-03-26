@@ -1,19 +1,29 @@
-import Navbar from "@/components/sections/navbar";
 import Hero from "@/components/sections/hero";
 import Works from "@/components/sections/works";
 import About from "@/components/sections/about";
 import Workstation from "@/components/sections/workstation";
+import {
+  getProjects,
+  getHeroContent,
+  getAboutContent,
+  getWorkstationContent,
+} from "@/lib/supabase/queries";
 
-export default function Home() {
+export default async function Home() {
+  const [projects, heroContent, aboutContent, workstationContent] =
+    await Promise.all([
+      getProjects(),
+      getHeroContent(),
+      getAboutContent(),
+      getWorkstationContent(),
+    ]);
+
   return (
     <>
-      {/* <div className="relative bg-cream-50 rounded-2xl px-4 md:px-8 pt-5">
-        <Navbar />
-      </div> */}
-      <Hero />
-      <Works />
-      <About />
-      <Workstation />
+      <Hero content={heroContent} />
+      <Works projects={projects} />
+      <About content={aboutContent} />
+      <Workstation content={workstationContent} />
     </>
   );
 }
