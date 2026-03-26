@@ -3,31 +3,21 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { scrollReveal } from "@/lib/utils";
+import type { WorkstationSectionContent } from "@/lib/supabase/types";
 
-const workstationImages = [
-  {
-    src: "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=500&h=350&fit=crop",
-    alt: "Workspace with tablet and phone",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=350&fit=crop",
-    alt: "Person coding on laptop",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=350&fit=crop",
-    alt: "Multiple screens setup",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=350&fit=crop",
-    alt: "Watch and phone on desk",
-    className: "col-span-1 row-span-1",
-  },
-];
+const DEFAULT: WorkstationSectionContent = {
+  heading: "Workstation",
+  description: "Where ideas come to life",
+  images: [
+    { url: "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=500&h=350&fit=crop", alt: "Workspace with tablet and phone" },
+    { url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=350&fit=crop", alt: "Person coding on laptop" },
+    { url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=350&fit=crop", alt: "Multiple screens setup" },
+    { url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=350&fit=crop", alt: "Watch and phone on desk" },
+  ],
+};
 
-export default function Workstation() {
+export default function Workstation({ content = DEFAULT }: { content?: WorkstationSectionContent }) {
+  const images = content.images?.length >= 4 ? content.images : DEFAULT.images;
   return (
     <section className="relative bg-cream-50 py-16 md:py-24 overflow-hidden my-10 rounded-2xl">
       {/* Decorative wave lines */}
@@ -81,8 +71,8 @@ export default function Workstation() {
           >
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-md">
               <Image
-                src={workstationImages[0].src}
-                alt={workstationImages[0].alt}
+                src={images[0].url}
+                alt={images[0].alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -113,8 +103,8 @@ export default function Workstation() {
           >
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-md">
               <Image
-                src={workstationImages[1].src}
-                alt={workstationImages[1].alt}
+                src={images[1].url}
+                alt={images[1].alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -146,8 +136,8 @@ export default function Workstation() {
           >
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-md">
               <Image
-                src={workstationImages[2].src}
-                alt={workstationImages[2].alt}
+                src={images[2].url}
+                alt={images[2].alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -182,8 +172,8 @@ export default function Workstation() {
           >
             <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-md">
               <Image
-                src={workstationImages[3].src}
-                alt={workstationImages[3].alt}
+                src={images[3].url}
+                alt={images[3].alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 33vw"
