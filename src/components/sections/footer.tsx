@@ -4,17 +4,18 @@ import { motion } from "framer-motion";
 import type {
   FooterContent,
   NavLink,
-  SiteContent,
   SocialLink,
 } from "@/content/portfolio.types";
 
 export default function Footer({
-  site,
+  email,
+  copyrightName,
   footer,
   quickLinks,
   socialLinks,
 }: {
-  site: SiteContent;
+  email: string;
+  copyrightName: string;
   footer: FooterContent;
   quickLinks: NavLink[];
   socialLinks: SocialLink[];
@@ -58,10 +59,10 @@ export default function Footer({
               {footer.emailLabel}
             </p>
             <a
-              href={`mailto:${site.email}`}
+              href={`mailto:${email}`}
               className="text-sm font-bold uppercase tracking-wide text-teal-800 transition-colors hover:text-teal-600 md:text-lg"
             >
-              {site.email}
+              {email}
             </a>
           </div>
 
@@ -123,7 +124,7 @@ export default function Footer({
           viewport={{ once: true }}
         >
           <p className="text-[0.6rem] uppercase tracking-[0.15em] text-teal-800/40">
-            &copy;{new Date().getFullYear()} {footer.copyrightName} | All Rights Reserved
+            &copy;{new Date().getFullYear()} {copyrightName} | All Rights Reserved
           </p>
         </motion.div>
       </div>

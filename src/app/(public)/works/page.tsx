@@ -7,7 +7,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import portfolio from "@/content/portfolio";
 
-const worksPageContent = portfolio.worksPage;
+const worksPageContent = portfolio.pages.works;
 
 /* ─── Gradient backgrounds matching portfolio.html ─── */
 const gradientBgs = [
@@ -58,7 +58,7 @@ function HeroSection() {
         >
           <div className="w-8 h-[1.5px] bg-lime" />
           <span className="font-mono text-[11px] tracking-[3px] uppercase text-teal-700">
-            {worksPageContent.hero.roleLabel}
+            {portfolio.profile.identity.headline}
           </span>
         </motion.div>
 
@@ -213,7 +213,7 @@ function AboutSection() {
         >
           {/* "ALBERT" label at bottom */}
           <span className="absolute bottom-4 left-4 font-display text-[14px] tracking-[3px] text-white/40">
-            {worksPageContent.about.imageLabel}
+            {portfolio.profile.identity.displayName.toUpperCase()}
           </span>
         </motion.div>
       </div>
@@ -269,7 +269,7 @@ function AboutSection() {
    MARQUEE BAR
 ═══════════════════════════════════════ */
 function MarqueeBar() {
-  const skills = worksPageContent.marqueeSkills;
+  const skills = portfolio.resume.skills.featured;
 
   return (
     <div className="bg-teal-700 overflow-hidden py-3.5">

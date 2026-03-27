@@ -20,6 +20,9 @@ import {
 import Link from "next/link";
 import { portfolio } from "@/content/portfolio";
 
+const profile = portfolio.profile;
+const contactPage = portfolio.pages.contact;
+
 function RotatingBadge({ words }: { words: string[] }) {
   const text = `${words.join(" • ")} • `;
 
@@ -204,7 +207,7 @@ function CopyEmail() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(portfolio.site.email);
+    await navigator.clipboard.writeText(profile.contact.email);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2000);
   };
@@ -237,9 +240,7 @@ function CopyEmail() {
         )}
       </AnimatePresence>
       <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em]">
-        {copied
-          ? portfolio.contactPage.copiedEmailLabel
-          : portfolio.contactPage.copyEmailLabel}
+        {copied ? contactPage.copiedEmailLabel : contactPage.copyEmailLabel}
       </span>
     </button>
   );
@@ -293,10 +294,7 @@ export default function ContactPage() {
   });
   const bgY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
-  const socials = useMemo(
-    () => portfolio.socialLinks.filter((item) => item.isActive),
-    []
-  );
+  const socials = useMemo(() => profile.socials.filter((item) => item.isActive), []);
 
   const updateField =
     (field: keyof typeof form) =>
@@ -307,22 +305,22 @@ export default function ContactPage() {
     event.preventDefault();
     setIsPending(true);
 
-    const subject = `${portfolio.contactPage.form.subjectPrefix}: ${
+    const subject = `${contactPage.form.subjectPrefix}: ${
       form.projectType || form.name || "New inquiry"
     }`;
 
     const lines = [
-      `${portfolio.contactPage.form.nameLabel}: ${form.name || "-"}`,
-      `${portfolio.contactPage.form.emailLabel}: ${form.email || "-"}`,
-      `${portfolio.contactPage.form.companyLabel}: ${form.company || "-"}`,
-      `${portfolio.contactPage.form.projectTypeLabel}: ${form.projectType || "-"}`,
-      `${portfolio.contactPage.form.budgetLabel}: ${budget || "-"}`,
+      `${contactPage.form.nameLabel}: ${form.name || "-"}`,
+      `${contactPage.form.emailLabel}: ${form.email || "-"}`,
+      `${contactPage.form.companyLabel}: ${form.company || "-"}`,
+      `${contactPage.form.projectTypeLabel}: ${form.projectType || "-"}`,
+      `${contactPage.form.budgetLabel}: ${budget || "-"}`,
       "",
-      `${portfolio.contactPage.form.messageLabel}:`,
+      `${contactPage.form.messageLabel}:`,
       form.message || "-",
     ];
 
-    window.location.href = `mailto:${portfolio.site.email}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${profile.contact.email}?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(lines.join("\n"))}`;
 
@@ -383,7 +381,7 @@ export default function ContactPage() {
                 className="inline-flex items-center gap-2 rounded-full border border-cream-300/15 px-4 py-2 font-mono text-[0.6rem] uppercase tracking-[1.5px] text-cream-200 transition-all duration-300 hover:border-lime hover:bg-lime hover:text-teal-900"
               >
                 <ArrowUpLeft className="h-3.5 w-3.5" />
-                Back to home
+                {contactPage.backToHomeLabel}
               </Link>
             </motion.div>
 
@@ -393,8 +391,8 @@ export default function ContactPage() {
               transition={{ duration: 0.5 }}
             >
               <LiveClock
-                timezone={portfolio.personalInfo.timezone}
-                location={portfolio.personalInfo.location}
+                timezone={profile.contact.location.timezone}
+                location={profile.contact.location.label}
               />
             </motion.div>
           </div>
@@ -407,7 +405,7 @@ export default function ContactPage() {
                 key={index}
                 className="flex items-center gap-8 font-display text-xs uppercase tracking-[0.3em] text-cream-300/15 md:text-sm"
               >
-                {portfolio.contactPage.marqueeItems.map((item) => (
+                {contactPage.marqueeItems.map((item) => (
                   <span key={`${index}-${item}`} className="flex items-center gap-8">
                     <span>{item}</span>
                     <span className="h-1.5 w-1.5 rounded-full bg-lime/30" />
@@ -427,13 +425,13 @@ export default function ContactPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                {portfolio.contactPage.eyebrow}
+                {contactPage.eyebrow}
               </motion.p>
 
               <h1 className="font-display text-[2.8rem] font-bold uppercase leading-[0.82] tracking-tighter text-cream-50 sm:text-[4rem] md:text-[5.5rem] lg:text-[6.5rem]">
-                {portfolio.contactPage.headingLine1}
+                {contactPage.headingLine1}
                 <br />
-                <span className="text-lime">{portfolio.contactPage.headingLine2}</span>
+                <span className="text-lime">{contactPage.headingLine2}</span>
               </h1>
             </div>
 
@@ -443,7 +441,7 @@ export default function ContactPage() {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
             >
-              <RotatingBadge words={portfolio.contactPage.rotatingBadgeWords} />
+              <RotatingBadge words={contactPage.rotatingBadgeWords} />
             </motion.div>
           </div>
 
@@ -453,7 +451,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
-            {portfolio.contactPage.description}
+            {contactPage.description}
           </motion.p>
         </div>
 
@@ -478,32 +476,32 @@ export default function ContactPage() {
             >
               <div className="space-y-3">
                 <p className="text-[0.55rem] font-medium uppercase tracking-[0.2em] text-cream-400/40">
-                  {portfolio.contactPage.emailLabel}
+                  {contactPage.emailLabel}
                 </p>
                 <a
-                  href={`mailto:${portfolio.site.email}`}
+                  href={`mailto:${profile.contact.email}`}
                   className="block text-base font-bold tracking-wide text-cream-100 transition-colors duration-300 hover:text-lime md:text-lg"
                 >
-                  {portfolio.site.email}
+                  {profile.contact.email}
                 </a>
                 <CopyEmail />
               </div>
 
               <div className="space-y-3">
                 <p className="text-[0.55rem] font-medium uppercase tracking-[0.2em] text-cream-400/40">
-                  {portfolio.contactPage.locationLabel}
+                  {contactPage.locationLabel}
                 </p>
                 <p className="text-sm font-medium tracking-wide text-cream-200/80">
-                  {portfolio.personalInfo.location}
+                  {profile.contact.location.label}
                 </p>
                 <p className="text-[0.55rem] uppercase tracking-[0.15em] text-cream-400/40">
-                  {portfolio.personalInfo.locationDetail}
+                  {profile.contact.location.detail}
                 </p>
               </div>
 
               <div className="space-y-3">
                 <p className="text-[0.55rem] font-medium uppercase tracking-[0.2em] text-cream-400/40">
-                  {portfolio.contactPage.followLabel}
+                  {contactPage.followLabel}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {socials.map((social, index) => (
@@ -531,7 +529,7 @@ export default function ContactPage() {
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-lime" />
                 </span>
                 <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-lime/80">
-                  {portfolio.contactPage.availabilityText}
+                  {contactPage.availabilityText}
                 </span>
               </div>
 
@@ -542,7 +540,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <RotatingBadge words={portfolio.contactPage.rotatingBadgeWords} />
+                <RotatingBadge words={contactPage.rotatingBadgeWords} />
               </motion.div>
             </motion.div>
 
@@ -562,25 +560,25 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
                   <div className="flex items-center justify-between pb-2">
                     <p className="text-[0.55rem] font-medium uppercase tracking-[0.2em] text-cream-400/65">
-                      {portfolio.contactPage.projectDetailsLabel}
+                      {contactPage.projectDetailsLabel}
                     </p>
                     <div className="flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-lime" />
                       <span className="text-[0.55rem] uppercase tracking-[0.15em] text-lime/60">
-                        {portfolio.contactPage.secureFormLabel}
+                        {contactPage.secureFormLabel}
                       </span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10">
                     <AnimatedInput
-                      label={portfolio.contactPage.form.nameLabel}
+                      label={contactPage.form.nameLabel}
                       name="name"
                       value={form.name}
                       onChange={updateField("name")}
                     />
                     <AnimatedInput
-                      label={portfolio.contactPage.form.emailLabel}
+                      label={contactPage.form.emailLabel}
                       name="email"
                       type="email"
                       value={form.email}
@@ -589,19 +587,19 @@ export default function ContactPage() {
                   </div>
 
                   <AnimatedInput
-                    label={portfolio.contactPage.form.companyLabel}
+                    label={contactPage.form.companyLabel}
                     name="company"
                     value={form.company}
                     onChange={updateField("company")}
                   />
                   <AnimatedInput
-                    label={portfolio.contactPage.form.projectTypeLabel}
+                    label={contactPage.form.projectTypeLabel}
                     name="projectType"
                     value={form.projectType}
                     onChange={updateField("projectType")}
                   />
                   <AnimatedInput
-                    label={portfolio.contactPage.form.messageLabel}
+                    label={contactPage.form.messageLabel}
                     name="message"
                     isTextarea
                     value={form.message}
@@ -610,10 +608,10 @@ export default function ContactPage() {
 
                   <div>
                     <p className="mb-4 text-[0.6rem] font-medium uppercase tracking-[0.12em] text-cream-400/70">
-                      {portfolio.contactPage.form.budgetLabel}
+                      {contactPage.form.budgetLabel}
                     </p>
                     <div className="flex flex-wrap gap-2.5">
-                      {portfolio.contactPage.form.budgetOptions.map((option) => (
+                      {contactPage.form.budgetOptions.map((option) => (
                         <BudgetPill
                           key={option}
                           label={option}
@@ -638,7 +636,7 @@ export default function ContactPage() {
                         >
                           <CheckCircle className="h-5 w-5" />
                           <span className="text-sm font-medium uppercase tracking-[0.15em]">
-                            {portfolio.contactPage.form.successMessage}
+                            {contactPage.form.successMessage}
                           </span>
                         </motion.div>
                       ) : (
@@ -650,9 +648,7 @@ export default function ContactPage() {
                         >
                           <MagneticButton type="submit" disabled={isPending}>
                             <span>
-                              {isPending
-                                ? portfolio.contactPage.form.sendingLabel
-                                : portfolio.contactPage.form.submitLabel}
+                              {isPending ? contactPage.form.sendingLabel : contactPage.form.submitLabel}
                             </span>
                             <Send className="h-4 w-4" />
                           </MagneticButton>
@@ -661,7 +657,7 @@ export default function ContactPage() {
                     </AnimatePresence>
 
                     <p className="max-w-[220px] text-[0.5rem] uppercase tracking-[0.15em] text-cream-400/45">
-                      {portfolio.contactPage.responseTimeText}
+                      {contactPage.responseTimeText}
                     </p>
                   </div>
                 </form>
@@ -679,7 +675,7 @@ export default function ContactPage() {
             viewport={{ once: true }}
           >
             <p className="pointer-events-none select-none font-display text-[3rem] font-bold uppercase leading-[0.82] tracking-tighter text-cream-500/[0.06] sm:text-[5rem] md:text-[7rem] lg:text-[9rem]">
-              Say hello.
+              {contactPage.closingLabel}
             </p>
           </motion.div>
         </div>

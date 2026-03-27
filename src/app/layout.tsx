@@ -36,29 +36,33 @@ const dancingScript = Dancing_Script({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { site } = portfolio;
+  const { seo } = portfolio.site;
   return {
-    title: site.title,
-    description: site.description,
-    keywords: site.keywords,
-    authors: site.author ? [{ name: site.author }] : undefined,
-    creator: site.author || undefined,
-    metadataBase: site.url ? new URL(site.url) : undefined,
-    robots: site.robots,
+    title: seo.title,
+    description: seo.description,
+    applicationName: portfolio.profile.identity.displayName,
+    keywords: seo.keywords,
+    authors: seo.author ? [{ name: seo.author }] : undefined,
+    creator: seo.author || undefined,
+    metadataBase: seo.url ? new URL(seo.url) : undefined,
+    robots: seo.robots,
+    alternates: {
+      canonical: seo.url || undefined,
+    },
     openGraph: {
       type: "website",
-      locale: site.locale,
-      title: site.title,
-      description: site.description,
-      url: site.url || undefined,
-      images: site.ogImage ? [{ url: site.ogImage, alt: site.title }] : undefined,
+      locale: seo.locale,
+      title: seo.title,
+      description: seo.description,
+      url: seo.url || undefined,
+      images: seo.ogImage ? [{ url: seo.ogImage, alt: seo.title }] : undefined,
     },
     twitter: {
-      card: site.ogImage ? "summary_large_image" : "summary",
-      title: site.title,
-      description: site.description,
-      creator: site.twitterHandle || undefined,
-      images: site.ogImage ? [site.ogImage] : undefined,
+      card: seo.ogImage ? "summary_large_image" : "summary",
+      title: seo.title,
+      description: seo.description,
+      creator: seo.twitterHandle || undefined,
+      images: seo.ogImage ? [seo.ogImage] : undefined,
     },
   };
 }
@@ -68,7 +72,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { theme } = portfolio;
+  const { seo, theme } = portfolio.site;
   const themeStyle = {
     "--color-teal-700": theme.primaryColor,
     "--color-lime": theme.accentColor,
@@ -80,7 +84,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang={seo.locale.split("_")[0] || "en"}
       className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${caveat.variable} ${dancingScript.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col" style={themeStyle}>

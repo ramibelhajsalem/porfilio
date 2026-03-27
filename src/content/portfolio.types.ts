@@ -1,21 +1,118 @@
 export interface PortfolioContent {
+  profile: ProfileContent;
+  resume: ResumeContent;
   site: SiteContent;
-  theme: ThemeContent;
-  personalInfo: PersonalInfo;
-  navigation: NavigationContent;
-  socialLinks: SocialLink[];
-  footer: FooterContent;
-  homePage: HomePageContent;
-  worksPage: WorksPageContent;
-  contactPage: ContactPageContent;
+  pages: PagesContent;
   projects: Project[];
   testimonials: Testimonial[];
   integrations: IntegrationsContent;
   ai: AIContent;
 }
 
-export interface SiteContent {
+export interface ProfileContent {
+  identity: ProfileIdentity;
+  summary: ProfileSummary;
+  contact: ProfileContact;
+  availability: ProfileAvailability;
+  socials: SocialLink[];
+}
+
+export interface ProfileIdentity {
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  fullName: string;
+  headline: string;
+  subtitle: string;
+  avatar: {
+    url: string;
+    alt: string;
+  };
+}
+
+export interface ProfileSummary {
+  short: string;
+  long: string;
+}
+
+export interface ProfileContact {
+  email: string;
+  supportEmail: string;
+  phone: string;
+  website: string;
+  location: {
+    label: string;
+    detail: string;
+    city: string;
+    country: string;
+    timezone: string;
+  };
+  responseTime: string;
+}
+
+export interface ProfileAvailability {
+  openToWork: boolean;
+  statusText: string;
+}
+
+export interface ResumeContent {
+  experience: ResumeExperienceItem[];
+  education: ResumeEducationItem[];
+  skills: ResumeSkills;
+  certifications: ResumeCertification[];
+  languages: ResumeLanguage[];
+}
+
+export interface ResumeExperienceItem {
+  id: string;
+  role: string;
+  company: string;
+  employmentType: string;
+  start: string;
+  end: string;
+  location: string;
+  summary: string;
+  achievements: string[];
+  technologies: string[];
+}
+
+export interface ResumeEducationItem {
+  id: string;
+  school: string;
+  degree: string;
+  start: string;
+  end: string;
+  location: string;
+}
+
+export interface ResumeSkills {
+  featured: string[];
+  frontend: string[];
+  backend: string[];
+  mobile: string[];
+  tools: string[];
+}
+
+export interface ResumeCertification {
+  id: string;
   name: string;
+  issuer: string;
+  year: string;
+}
+
+export interface ResumeLanguage {
+  name: string;
+  level: string;
+}
+
+export interface SiteContent {
+  seo: SeoContent;
+  theme: ThemeContent;
+  navigation: NavigationContent;
+  footer: FooterContent;
+}
+
+export interface SeoContent {
   title: string;
   description: string;
   author: string;
@@ -23,8 +120,6 @@ export interface SiteContent {
   locale: string;
   robots: string;
   keywords: string[];
-  email: string;
-  supportEmail: string;
   ogImage: string;
   twitterHandle: string;
 }
@@ -36,23 +131,6 @@ export interface ThemeContent {
   surfaceColor: string;
   foregroundColor: string;
   mutedColor: string;
-}
-
-export interface PersonalInfo {
-  firstName: string;
-  fullName: string;
-  title: string;
-  subtitle: string;
-  bio: string;
-  bioExtended: string;
-  avatarUrl: string;
-  avatarAlt: string;
-  email: string;
-  location: string;
-  locationDetail: string;
-  timezone: string;
-  responseTime: string;
-  availability: boolean;
 }
 
 export interface NavigationContent {
@@ -79,7 +157,6 @@ export interface FooterContent {
   quickLinksTitle: string;
   addressTitle: string;
   followTitle: string;
-  copyrightName: string;
   address: {
     street: string;
     city: string;
@@ -87,8 +164,14 @@ export interface FooterContent {
   };
 }
 
+export interface PagesContent {
+  home: HomePageContent;
+  works: WorksPageContent;
+  contact: ContactPageContent;
+}
+
 export interface HomePageContent {
-  hero: HomeHeroContent;
+  hero: HomeHeroPageContent;
   works: HomeWorksContent;
   about: AboutSectionContent;
   workstation: WorkstationSectionContent;
@@ -96,6 +179,11 @@ export interface HomePageContent {
     heading: string;
   };
   contactCta: ContactCTAContent;
+}
+
+export interface HomeHeroPageContent {
+  greetingPrefix: string;
+  titleWords: [string, string, string];
 }
 
 export interface HomeHeroContent {
@@ -154,7 +242,6 @@ export interface ContactCTAContent {
 export interface WorksPageContent {
   hero: {
     backToHomeLabel: string;
-    roleLabel: string;
     headingLine1: string;
     headingLine2: string;
     headingLine3: string;
@@ -169,7 +256,6 @@ export interface WorksPageContent {
     panelLine3: string;
     availabilityBadge: string;
   };
-  marqueeSkills: string[];
   selectedWorks: {
     eyebrow: string;
     heading: string;
@@ -185,7 +271,6 @@ export interface WorksPageContent {
     headingLine2: string;
     headingLine3: string;
     description: string;
-    imageLabel: string;
     stats: Array<{
       num: string;
       label: string;
@@ -194,6 +279,7 @@ export interface WorksPageContent {
 }
 
 export interface ContactPageContent {
+  backToHomeLabel: string;
   rotatingBadgeWords: string[];
   marqueeItems: string[];
   eyebrow: string;
@@ -209,6 +295,7 @@ export interface ContactPageContent {
   responseTimeText: string;
   copyEmailLabel: string;
   copiedEmailLabel: string;
+  closingLabel: string;
   form: {
     nameLabel: string;
     emailLabel: string;

@@ -1,252 +1,311 @@
 import type { PortfolioContent } from "./portfolio.types";
 
 export const portfolio = {
-  // Main site metadata used in <head>, footer, and contact links.
+  // Core person/profile data. Update identity, bio, email, socials, and location here.
+  profile: {
+    identity: {
+      firstName: "Nidhal",
+      lastName: "BHS",
+      displayName: "Nidhal",
+      fullName: "Nidhal bhs",
+      headline: "Mobile Apps Developer",
+      subtitle: "Front-End-Developer-Code",
+      avatar: {
+        url: "/images/user1.png",
+        alt: "Nidhal portrait",
+      },
+    },
+
+    summary: {
+      short: "I build modern interfaces with strong motion, sharp typography, and clean product thinking.",
+      long:
+        "I enjoy crafting digital experiences that feel intentional, technical, and memorable. My work blends UI systems, interaction design, and solid implementation details.",
+    },
+
+    contact: {
+      email: "hello@nidhalkh.com",
+      supportEmail: "hello@nidhalkh.com",
+      phone: "",
+      website: "https://yourdomain.com",
+      location: {
+        label: "Tunis, Tunisia",
+        detail: "Available for remote collaborations worldwide",
+        city: "Tunis",
+        country: "Tunisia",
+        timezone: "Africa/Tunis",
+      },
+      responseTime: "24 hours",
+    },
+
+    availability: {
+      openToWork: true,
+      statusText: "Available for new projects",
+    },
+
+    socials: [
+      { platform: "linkedin", label: "LinkedIn", href: "https://linkedin.com", isActive: true },
+      { platform: "github", label: "GitHub", href: "https://github.com", isActive: true },
+      { platform: "instagram", label: "Instagram", href: "https://instagram.com", isActive: true },
+      { platform: "x", label: "Twitter", href: "https://x.com", isActive: true },
+    ],
+  },
+
+  // CV/resume-style data. Safe place for work history, education, and skills.
+  resume: {
+    experience: [
+      {
+        id: "exp-freelance",
+        role: "Frontend Developer",
+        company: "Independent / Freelance",
+        employmentType: "Contract",
+        start: "2021-01",
+        end: "Present",
+        location: "Remote",
+        summary:
+          "I design and ship interfaces for portfolio sites, SaaS products, dashboards, and brand-focused digital experiences.",
+        achievements: [
+          "Built polished UI systems with strong motion and responsive behavior.",
+          "Delivered production-ready interfaces across web and product surfaces.",
+          "Collaborated directly with clients on UX direction and implementation details.",
+        ],
+        technologies: ["React", "Next.js", "TypeScript", "Vue", "Tailwind CSS"],
+      },
+    ],
+    education: [
+      {
+        id: "edu-computer-science",
+        school: "Higher Institute of Technological Studies",
+        degree: "Computer Science",
+        start: "2018",
+        end: "2021",
+        location: "Tunisia",
+      },
+    ],
+    skills: {
+      featured: [
+        "Vue.js",
+        "React",
+        "TypeScript",
+        "ASP.NET Core",
+        "Motion Design",
+        "UI/UX",
+        "Tailwind CSS",
+        "Kotlin",
+      ],
+      frontend: ["React", "Next.js", "Vue", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      backend: ["Node.js", "ASP.NET Core"],
+      mobile: ["Kotlin", "Kotlin Multiplatform"],
+      tools: ["Git", "Figma", "Vercel", "Supabase"],
+    },
+    certifications: [],
+    languages: [
+      { name: "Arabic", level: "Native" },
+      { name: "English", level: "Professional" },
+      { name: "French", level: "Professional" },
+    ],
+  },
+
+  // Site-level settings like SEO, theme, navigation, and footer labels.
   site: {
-    name: "Nidhal", // Main brand name shown in the navbar logo.
-    title: "Nidhal | Mobile Apps Engenier",
-    description:
-      "Frontend developer portfolio focused on polished interfaces, motion, and creative web experiences.",
-    author: "Nidhal",
-    url: "https://yourdomain.com",
-    locale: "en_US",
-    robots: "index, follow",
-    keywords: ["Frontend Developer", "React", "Next.js", "Portfolio"],
-    email: "hello@nidhalkh.com",
-    supportEmail: "hello@nidhalkh.com",
-    ogImage: "/images/og-cover.png",
-    twitterHandle: "@nidhaldev",
-  },
-
-  // Theme tokens wired into CSS variables in src/app/layout.tsx.
-  theme: {
-    primaryColor: "#1B4D3E",
-    accentColor: "#b8f02a",
-    backgroundColor: "#ffffff",
-    surfaceColor: "#f8fafc",
-    foregroundColor: "#0f172a",
-    mutedColor: "#64748b",
-  },
-
-  // Personal information reused across hero, contact, and footer sections.
-  personalInfo: {
-    firstName: "Ahmed",
-    fullName: "Nidhal Kh",
-    title: "Front-End Developer",
-    subtitle: "Front-End-Developer-Code",
-    bio: "I build modern interfaces with strong motion, sharp typography, and clean product thinking.",
-    bioExtended:
-      "I enjoy crafting digital experiences that feel intentional, technical, and memorable. My work blends UI systems, interaction design, and solid implementation details.",
-    avatarUrl: "/images/user1.png",
-    avatarAlt: "Nidhal portrait",
-    email: "hello@nidhalkh.com",
-    location: "Tunis, Tunisia",
-    locationDetail: "Available for remote collaborations worldwide",
-    timezone: "Africa/Tunis",
-    responseTime: "24 hours",
-    availability: true,
-  },
-
-  // Navigation links used in the main navbar and footer quick links.
-  navigation: {
-    main: [
-      { label: "Works", href: "/works", openNewTab: false, isActive: true },
-      { label: "About", href: "#about", openNewTab: false, isActive: true },
-      { label: "Testimonials", href: "#testimonials", openNewTab: false, isActive: true },
-      { label: "Contact", href: "/contact", openNewTab: false, isActive: true },
-    ],
-    footer: [
-      { label: "Works", href: "/works", openNewTab: false, isActive: true },
-      { label: "About Me", href: "#about", openNewTab: false, isActive: true },
-      { label: "Testimonials", href: "#testimonials", openNewTab: false, isActive: true },
-    ],
-  },
-
-  // Social links shown in the navbar, footer, and contact page.
-  socialLinks: [
-    { platform: "linkedin", label: "LinkedIn", href: "https://linkedin.com", isActive: true },
-    { platform: "github", label: "GitHub", href: "https://github.com", isActive: true },
-    { platform: "instagram", label: "Instagram", href: "https://instagram.com", isActive: true },
-    { platform: "x", label: "Twitter", href: "https://x.com", isActive: true },
-  ],
-
-  footer: {
-    emailLabel: "Email me for quick conversation",
-    quickLinksTitle: "Quick Links",
-    addressTitle: "Address",
-    followTitle: "Follow",
-    copyrightName: "Nidhal",
-    address: {
-      street: "Lac 2, Office 14",
-      city: "Tunis 1053",
-      country: "Tunisia",
+    seo: {
+      title: "Nidhal | Mobile Apps Engineer",
+      description:
+        "Frontend developer portfolio focused on polished interfaces, motion, and creative web experiences.",
+      author: "Nidhal",
+      url: "https://yourdomain.com",
+      locale: "en_US",
+      robots: "index, follow",
+      keywords: ["Frontend Developer", "React", "Next.js", "Portfolio"],
+      ogImage: "/images/user1.png",
+      twitterHandle: "@nidhaldev",
+    },
+    theme: {
+      primaryColor: "#1B4D3E",
+      accentColor: "#b8f02a",
+      backgroundColor: "#ffffff",
+      surfaceColor: "#f8fafc",
+      foregroundColor: "#0f172a",
+      mutedColor: "#64748b",
+    },
+    navigation: {
+      main: [
+        { label: "Works", href: "/works", openNewTab: false, isActive: true },
+        { label: "About", href: "#about", openNewTab: false, isActive: true },
+        { label: "Testimonials", href: "#testimonials", openNewTab: false, isActive: true },
+        { label: "Contact", href: "/contact", openNewTab: false, isActive: true },
+      ],
+      footer: [
+        { label: "Works", href: "/works", openNewTab: false, isActive: true },
+        { label: "About Me", href: "#about", openNewTab: false, isActive: true },
+        { label: "Testimonials", href: "#testimonials", openNewTab: false, isActive: true },
+      ],
+    },
+    footer: {
+      emailLabel: "Email me for quick conversation",
+      quickLinksTitle: "Quick Links",
+      addressTitle: "Address",
+      followTitle: "Follow",
+      address: {
+        street: "Lac 2, Office 14",
+        city: "Tunis 1053",
+        country: "Tunisia",
+      },
     },
   },
 
-  homePage: {
-    hero: {
-      greeting: "Hi there, I'm Nidhal",
-      titleWords: ["Front", "End", "Developer"],
-      bio: "I design and build elegant interfaces with motion, structure, and a strong attention to detail.",
-      photoUrl: "/images/user1.png",
-      photoAlt: "Nidhal profile photo",
+  // Page-specific copy only. Keep labels, headings, CTAs, and section text here.
+  pages: {
+    home: {
+      hero: {
+        greetingPrefix: "Hi there, I'm",
+        titleWords: ["Front", "End", "Developer"],
+      },
+      works: {
+        title: "Works",
+        description:
+          "A selection of product, branding, and interactive builds shaped around storytelling and usability.",
+        viewAllLabel: "View All Projects",
+      },
+      about: {
+        headline1: "Passionate",
+        headline2: "About Development",
+        passionDescription: "I enjoy blending visual polish with practical product thinking.",
+        workExperienceTitle: "Work Experience",
+        workExperienceText:
+          "I work across portfolio sites, SaaS products, dashboards, and brand-forward digital experiences.",
+        aboutDescription:
+          "I care about clean systems, motion that feels purposeful, and interfaces that leave a strong impression without becoming noisy.",
+        inlineImageUrl: "https://images.unsplash.com/photo-1685062428479-e310b7851de5?w=300&h=300",
+        inlineImageAlt: "Abstract 3D element",
+        gridImage1Url:
+          "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=500&fit=crop",
+        gridImage1Alt: "Colorful 3D shapes",
+        gridImage2Url:
+          "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=400&h=500&fit=crop",
+        gridImage2Alt: "Green glowing cube",
+        viewAllLabel: "View All",
+        viewAllHref: "/works",
+      },
+      workstation: {
+        sideLabelLeft: "A setup built for focus, iteration, and visual experimentation.",
+        sideLabelRight: "Tools matter when speed and clarity both need to stay high.",
+        sectionTitle: "Workstation",
+        favoriteGearsTitle: "Favourite Gears",
+        favoriteGearsDescription:
+          "A small set of tools I rely on every day for design reviews, coding, prototyping, and shipping polished interfaces.",
+        images: [
+          {
+            url: "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=500&h=350&fit=crop",
+            alt: "Workspace with tablet and phone",
+          },
+          {
+            url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=350&fit=crop",
+            alt: "Person coding on laptop",
+          },
+          {
+            url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=350&fit=crop",
+            alt: "Multiple screens setup",
+          },
+          {
+            url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=350&fit=crop",
+            alt: "Watch and phone on desk",
+          },
+        ],
+      },
+      testimonials: {
+        heading: "What People Say About Me",
+      },
+      contactCta: {
+        headingLine1: "Have An",
+        headingLine2: "Idea?",
+        detailLine1: "Tell Me",
+        detailLine2: "About It",
+        description:
+          "If you already have a direction in mind, send me the brief and I'll help shape it into something sharp and memorable.",
+        buttonLabel: "Send Me A Request",
+        buttonHref: "/contact",
+      },
     },
+
     works: {
-      title: "Works",
-      description:
-        "A selection of product, branding, and interactive builds shaped around storytelling and usability.",
-      viewAllLabel: "View All Projects",
+      hero: {
+        backToHomeLabel: "Back to home",
+        headingLine1: "I BUILD",
+        headingLine2: "DIGITAL",
+        headingLine3: "WORLDS",
+        description:
+          "A creative front-end developer with a strong focus on motion and interaction - turning ideas into unforgettable web experiences.",
+        primaryCtaLabel: "View Works",
+        primaryCtaHref: "#works",
+        secondaryCtaLabel: "Let's Talk",
+        secondaryCtaHref: "#cta",
+        scrollHintLabel: "Scroll to explore",
+        panelLine1: "FRONT",
+        panelLine2: "END",
+        panelLine3: "DEV",
+        availabilityBadge: "Open to work",
+      },
+      selectedWorks: {
+        eyebrow: "Selected Works",
+        heading: "PROJECTS",
+      },
+      gallery: {
+        eyebrow: "Featured Gallery",
+        headingLine1: "VISUAL",
+        headingLine2: "SHOWCASE",
+      },
+      about: {
+        eyebrow: "About Me",
+        headingLine1: "CREATIVE",
+        headingLine2: "DEVELOPER",
+        headingLine3: "BY NATURE",
+        description:
+          "I'm a full-stack developer obsessed with the intersection of design and engineering. From Vue 3 SPAs to Kotlin Multiplatform apps, I build things that move, feel alive, and solve real problems. Currently exploring AI-powered applications and real-time collaborative experiences.",
+        stats: [
+          { num: "5+", label: "Years crafting" },
+          { num: "20+", label: "Projects shipped" },
+          { num: "∞", label: "Curiosity level" },
+          { num: "01", label: "Focused vision" },
+        ],
+      },
     },
-    about: {
-      headline1: "Passionate",
-      headline2: "About Development",
-      passionDescription: "I enjoy blending visual polish with practical product thinking.",
-      workExperienceTitle: "Work Experience",
-      workExperienceText:
-        "I work across portfolio sites, SaaS products, dashboards, and brand-forward digital experiences.",
-      aboutDescription:
-        "I care about clean systems, motion that feels purposeful, and interfaces that leave a strong impression without becoming noisy.",
-      inlineImageUrl: "https://images.unsplash.com/photo-1685062428479-e310b7851de5?w=300&h=300",
-      inlineImageAlt: "Abstract 3D element",
-      gridImage1Url:
-        "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=500&fit=crop",
-      gridImage1Alt: "Colorful 3D shapes",
-      gridImage2Url:
-        "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=400&h=500&fit=crop",
-      gridImage2Alt: "Green glowing cube",
-      viewAllLabel: "View All",
-      viewAllHref: "/works",
-    },
-    workstation: {
-      sideLabelLeft: "A setup built for focus, iteration, and visual experimentation.",
-      sideLabelRight: "Tools matter when speed and clarity both need to stay high.",
-      sectionTitle: "Workstation",
-      favoriteGearsTitle: "Favourite Gears",
-      favoriteGearsDescription:
-        "A small set of tools I rely on every day for design reviews, coding, prototyping, and shipping polished interfaces.",
-      images: [
-        {
-          url: "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=500&h=350&fit=crop",
-          alt: "Workspace with tablet and phone",
-        },
-        {
-          url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=350&fit=crop",
-          alt: "Person coding on laptop",
-        },
-        {
-          url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=350&fit=crop",
-          alt: "Multiple screens setup",
-        },
-        {
-          url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=350&fit=crop",
-          alt: "Watch and phone on desk",
-        },
-      ],
-    },
-    testimonials: {
-      heading: "What People Say About Me",
-    },
-    contactCta: {
-      headingLine1: "Have An",
-      headingLine2: "Idea?",
-      detailLine1: "Tell Me",
-      detailLine2: "About It",
-      description:
-        "If you already have a direction in mind, send me the brief and I'll help shape it into something sharp and memorable.",
-      buttonLabel: "Send Me A Request",
-      buttonHref: "/contact",
-    },
-  },
 
-  // Change only these fields if you want to update the texts on /works.
-  worksPage: {
-    hero: {
+    contact: {
       backToHomeLabel: "Back to home",
-      roleLabel: "Mobile Apps Developer",
-      headingLine1: "I BUILD",
-      headingLine2: "DIGITAL",
-      headingLine3: "WORLDS",
+      rotatingBadgeWords: ["GET IN TOUCH", "LET'S TALK", "SAY HELLO"],
+      marqueeItems: ["Available for freelance", "Open to collaboration", "Let's build something great"],
+      eyebrow: "Have a project in mind?",
+      headingLine1: "Let's work",
+      headingLine2: "together.",
       description:
-        "A creative front-end developer with a strong focus on motion and interaction - turning ideas into unforgettable web experiences.",
-      primaryCtaLabel: "View Works",
-      primaryCtaHref: "#works",
-      secondaryCtaLabel: "Let's Talk",
-      secondaryCtaHref: "#cta",
-      scrollHintLabel: "Scroll to explore",
-      panelLine1: "FRONT",
-      panelLine2: "END",
-      panelLine3: "DEV",
-      availabilityBadge: "Open to work",
-    },
-    marqueeSkills: [
-      "Vue.js",
-      "React",
-      "TypeScript",
-      "ASP.NET Core",
-      "Motion Design",
-      "UI/UX",
-      "Tailwind CSS",
-      "Kotlin",
-    ],
-    selectedWorks: {
-      eyebrow: "Selected Works",
-      heading: "PROJECTS",
-    },
-    gallery: {
-      eyebrow: "Featured Gallery",
-      headingLine1: "VISUAL",
-      headingLine2: "SHOWCASE",
-    },
-    about: {
-      eyebrow: "About Me",
-      headingLine1: "CREATIVE",
-      headingLine2: "DEVELOPER",
-      headingLine3: "BY NATURE",
-      description:
-        "I'm a full-stack developer obsessed with the intersection of design and engineering. From Vue 3 SPAs to Kotlin Multiplatform apps, I build things that move, feel alive, and solve real problems. Currently exploring AI-powered applications and real-time collaborative experiences.",
-      imageLabel: "ALBERT",
-      stats: [
-        { num: "5+", label: "Years crafting" },
-        { num: "20+", label: "Projects shipped" },
-        { num: "∞", label: "Curiosity level" },
-        { num: "01", label: "Focused vision" },
-      ],
+        "I am always open to new collaborations, product ideas, redesigns, and ambitious front-end builds.",
+      emailLabel: "Email",
+      locationLabel: "Based in",
+      followLabel: "Follow me",
+      availabilityText: "Available for new projects",
+      projectDetailsLabel: "Project details",
+      secureFormLabel: "Direct contact",
+      responseTimeText: "I typically respond within 24 hours",
+      copyEmailLabel: "Copy email",
+      copiedEmailLabel: "Copied!",
+      closingLabel: "Say hello.",
+      form: {
+        nameLabel: "Your name",
+        emailLabel: "Email address",
+        companyLabel: "Company / Organization",
+        projectTypeLabel: "Project type (e.g. Web App, Branding, Mobile)",
+        messageLabel: "Tell me about your project",
+        budgetLabel: "Project budget",
+        budgetOptions: ["< $5k", "$5k - $10k", "$10k - $25k", "$25k+"],
+        submitLabel: "Send message",
+        sendingLabel: "Opening email...",
+        successMessage: "Your email client should open with the project details ready to send.",
+        subjectPrefix: "Project inquiry",
+      },
     },
   },
 
-  contactPage: {
-    rotatingBadgeWords: ["GET IN TOUCH", "LET'S TALK", "SAY HELLO"],
-    marqueeItems: ["Available for freelance", "Open to collaboration", "Let's build something great"],
-    eyebrow: "Have a project in mind?",
-    headingLine1: "Let's work",
-    headingLine2: "together.",
-    description:
-      "I am always open to new collaborations, product ideas, redesigns, and ambitious front-end builds.",
-    emailLabel: "Email",
-    locationLabel: "Based in",
-    followLabel: "Follow me",
-    availabilityText: "Available for new projects",
-    projectDetailsLabel: "Project details",
-    secureFormLabel: "Direct contact",
-    responseTimeText: "I typically respond within 24 hours",
-    copyEmailLabel: "Copy email",
-    copiedEmailLabel: "Copied!",
-    form: {
-      nameLabel: "Your name",
-      emailLabel: "Email address",
-      companyLabel: "Company / Organization",
-      projectTypeLabel: "Project type (e.g. Web App, Branding, Mobile)",
-      messageLabel: "Tell me about your project",
-      budgetLabel: "Project budget",
-      budgetOptions: ["< $5k", "$5k - $10k", "$10k - $25k", "$25k+"],
-      submitLabel: "Send message",
-      sendingLabel: "Opening email...",
-      successMessage: "Your email client should open with the project details ready to send.",
-      subjectPrefix: "Project inquiry",
-    },
-  },
-
-  // Toggle isHidden to true if you want a project to disappear from the site.
+  // Portfolio/case-study entries.
   projects: [
     {
       id: "reality-affodils",
