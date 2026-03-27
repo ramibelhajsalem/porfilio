@@ -152,15 +152,45 @@ export interface ContactCTAContent {
 }
 
 export interface WorksPageContent {
-  eyebrow: string;
-  headingLine1: string;
-  headingLine2: string;
-  description: string;
-  primaryCtaLabel: string;
-  primaryCtaHref: string;
-  secondaryCtaLabel: string;
-  secondaryCtaHref: string;
-  backToHomeLabel: string;
+  hero: {
+    backToHomeLabel: string;
+    roleLabel: string;
+    headingLine1: string;
+    headingLine2: string;
+    headingLine3: string;
+    description: string;
+    primaryCtaLabel: string;
+    primaryCtaHref: string;
+    secondaryCtaLabel: string;
+    secondaryCtaHref: string;
+    scrollHintLabel: string;
+    panelLine1: string;
+    panelLine2: string;
+    panelLine3: string;
+    availabilityBadge: string;
+  };
+  marqueeSkills: string[];
+  selectedWorks: {
+    eyebrow: string;
+    heading: string;
+  };
+  gallery: {
+    eyebrow: string;
+    headingLine1: string;
+    headingLine2: string;
+  };
+  about: {
+    eyebrow: string;
+    headingLine1: string;
+    headingLine2: string;
+    headingLine3: string;
+    description: string;
+    imageLabel: string;
+    stats: Array<{
+      num: string;
+      label: string;
+    }>;
+  };
 }
 
 export interface ContactPageContent {

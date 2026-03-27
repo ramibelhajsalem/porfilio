@@ -160,16 +160,58 @@ export const portfolio = {
 
   // Change only these fields if you want to update the texts on /works.
   worksPage: {
-    eyebrow: "Selected Projects",
-    headingLine1: "Creative",
-    headingLine2: "Digital Work",
-    description:
-      "A broader look at the interfaces, experiences, and visual systems I have been building.",
-    primaryCtaLabel: "Contact Me",
-    primaryCtaHref: "/contact",
-    secondaryCtaLabel: "Back Home",
-    secondaryCtaHref: "/",
-    backToHomeLabel: "Back to home",
+    hero: {
+      backToHomeLabel: "Back to home",
+      roleLabel: "Mobile Apps Developer",
+      headingLine1: "I BUILD",
+      headingLine2: "DIGITAL",
+      headingLine3: "WORLDS",
+      description:
+        "A creative front-end developer with a strong focus on motion and interaction - turning ideas into unforgettable web experiences.",
+      primaryCtaLabel: "View Works",
+      primaryCtaHref: "#works",
+      secondaryCtaLabel: "Let's Talk",
+      secondaryCtaHref: "#cta",
+      scrollHintLabel: "Scroll to explore",
+      panelLine1: "FRONT",
+      panelLine2: "END",
+      panelLine3: "DEV",
+      availabilityBadge: "Open to work",
+    },
+    marqueeSkills: [
+      "Vue.js",
+      "React",
+      "TypeScript",
+      "ASP.NET Core",
+      "Motion Design",
+      "UI/UX",
+      "Tailwind CSS",
+      "Kotlin",
+    ],
+    selectedWorks: {
+      eyebrow: "Selected Works",
+      heading: "PROJECTS",
+    },
+    gallery: {
+      eyebrow: "Featured Gallery",
+      headingLine1: "VISUAL",
+      headingLine2: "SHOWCASE",
+    },
+    about: {
+      eyebrow: "About Me",
+      headingLine1: "CREATIVE",
+      headingLine2: "DEVELOPER",
+      headingLine3: "BY NATURE",
+      description:
+        "I'm a full-stack developer obsessed with the intersection of design and engineering. From Vue 3 SPAs to Kotlin Multiplatform apps, I build things that move, feel alive, and solve real problems. Currently exploring AI-powered applications and real-time collaborative experiences.",
+      imageLabel: "ALBERT",
+      stats: [
+        { num: "5+", label: "Years crafting" },
+        { num: "20+", label: "Projects shipped" },
+        { num: "∞", label: "Curiosity level" },
+        { num: "01", label: "Focused vision" },
+      ],
+    },
   },
 
   contactPage: {

@@ -7,6 +7,8 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import portfolio from "@/content/portfolio";
 
+const worksPageContent = portfolio.worksPage;
+
 /* ─── Gradient backgrounds matching portfolio.html ─── */
 const gradientBgs = [
   "bg-gradient-to-br from-[#2d7a4f] to-[#1a5c3a]",
@@ -23,6 +25,7 @@ const gradientBgs = [
 function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true });
+
   return (
     <section
       ref={ref}
@@ -42,7 +45,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 px-4 py-2 border border-teal-800/20 text-teal-800 font-mono text-[10px] tracking-[1.5px] uppercase hover:bg-teal-700 hover:text-lime hover:border-teal-700 transition-all"
           >
             <ArrowUpLeft className="w-3.5 h-3.5" />
-            Back to home
+            {worksPageContent.hero.backToHomeLabel}
           </Link>
         </motion.div>
 
@@ -55,7 +58,7 @@ function HeroSection() {
         >
           <div className="w-8 h-[1.5px] bg-lime" />
           <span className="font-mono text-[11px] tracking-[3px] uppercase text-teal-700">
-            Frontend Developer
+            {worksPageContent.hero.roleLabel}
           </span>
         </motion.div>
 
@@ -66,12 +69,12 @@ function HeroSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          I BUILD
+          {worksPageContent.hero.headingLine1}
           <br />
-          <em className="text-teal-700 not-italic">DIGITAL</em>
+          <em className="text-teal-700 not-italic">{worksPageContent.hero.headingLine2}</em>
           <br />
           <span className="text-transparent [-webkit-text-stroke:2px_var(--color-teal-700)]">
-            WORLDS
+            {worksPageContent.hero.headingLine3}
           </span>
         </motion.h1>
 
@@ -82,8 +85,7 @@ function HeroSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          A creative front-end developer with a strong focus on motion and
-          interaction — turning ideas into unforgettable web experiences.
+          {worksPageContent.hero.description}
         </motion.p>
 
         {/* CTA buttons */}
@@ -94,16 +96,16 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           <a
-            href="#works"
+            href={worksPageContent.hero.primaryCtaHref}
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-teal-700 text-lime font-mono text-[12px] tracking-[1.5px] uppercase hover:bg-teal-800 transition-colors"
           >
-            View Works →
+            {worksPageContent.hero.primaryCtaLabel} →
           </a>
           <a
-            href="#cta"
+            href={worksPageContent.hero.secondaryCtaHref}
             className="inline-flex items-center gap-2 px-7 py-3.5 border-[1.5px] border-teal-800 text-teal-800 font-mono text-[12px] tracking-[1.5px] uppercase hover:bg-teal-800 hover:text-cream-50 transition-all"
           >
-            Let&apos;s Talk
+            {worksPageContent.hero.secondaryCtaLabel}
           </a>
         </motion.div>
 
@@ -116,7 +118,7 @@ function HeroSection() {
         >
           <div className="w-10 h-px bg-teal-800/40 animate-scroll-hint" />
           <span className="font-mono text-[10px] tracking-[2px] uppercase text-teal-800/40">
-            Scroll to explore
+            {worksPageContent.hero.scrollHintLabel}
           </span>
         </motion.div>
       </div>
@@ -159,11 +161,11 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <div className="font-display text-[clamp(2.5rem,6vw,5rem)] text-lime tracking-[4px] text-center leading-[1.2] p-5">
-            FRONT
+            {worksPageContent.hero.panelLine1}
             <br />
-            END
+            {worksPageContent.hero.panelLine2}
             <br />
-            DEV
+            {worksPageContent.hero.panelLine3}
           </div>
         </motion.div>
 
@@ -174,7 +176,7 @@ function HeroSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          Open to work
+          {worksPageContent.hero.availabilityBadge}
         </motion.div>
       </div>
     </section>
@@ -187,13 +189,7 @@ function HeroSection() {
 function AboutSection() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const stats = [
-    { num: "5+", label: "Years crafting" },
-    { num: "20+", label: "Projects shipped" },
-    { num: "∞", label: "Curiosity level" },
-    { num: "01", label: "Focused vision" },
-  ];
+  const stats = worksPageContent.about.stats;
 
   return (
     <section
@@ -217,7 +213,7 @@ function AboutSection() {
         >
           {/* "ALBERT" label at bottom */}
           <span className="absolute bottom-4 left-4 font-display text-[14px] tracking-[3px] text-white/40">
-            ALBERT
+            {worksPageContent.about.imageLabel}
           </span>
         </motion.div>
       </div>
@@ -230,23 +226,19 @@ function AboutSection() {
           transition={{ duration: 0.7, delay: 0.15 }}
         >
           <div className="font-mono text-[11px] tracking-[3px] uppercase text-teal-700 mb-4">
-            About Me
+            {worksPageContent.about.eyebrow}
           </div>
 
           <h2 className="font-display text-[clamp(2.25rem,4vw,3.5rem)] leading-[1] text-teal-800 mb-7">
-            CREATIVE
+            {worksPageContent.about.headingLine1}
             <br />
-            DEVELOPER
+            {worksPageContent.about.headingLine2}
             <br />
-            <em className="text-teal-700 not-italic">BY NATURE</em>
+            <em className="text-teal-700 not-italic">{worksPageContent.about.headingLine3}</em>
           </h2>
 
           <p className="text-[15px] leading-[1.75] text-[#555] max-w-[440px]">
-            I&apos;m a full-stack developer obsessed with the intersection of design
-            and engineering. From Vue 3 SPAs to Kotlin Multiplatform apps, I
-            build things that move, feel alive, and solve real problems.
-            Currently exploring AI-powered applications and real-time
-            collaborative experiences.
+            {worksPageContent.about.description}
           </p>
         </motion.div>
 
@@ -277,10 +269,8 @@ function AboutSection() {
    MARQUEE BAR
 ═══════════════════════════════════════ */
 function MarqueeBar() {
-  const skills = [
-    "Vue.js", "React", "TypeScript", "ASP.NET Core",
-    "Motion Design", "UI/UX", "Tailwind CSS", "Kotlin",
-  ];
+  const skills = worksPageContent.marqueeSkills;
+
   return (
     <div className="bg-teal-700 overflow-hidden py-3.5">
       <div className="flex whitespace-nowrap animate-marquee">
@@ -560,12 +550,12 @@ function SwiperSection() {
       >
         <div>
           <div className="font-mono text-[11px] tracking-[3px] uppercase text-lime/70 mb-3">
-            Featured Gallery
+            {worksPageContent.gallery.eyebrow}
           </div>
           <h2 className="font-display text-[clamp(3rem,5vw,4.5rem)] text-white leading-[0.9]">
-            VISUAL
+            {worksPageContent.gallery.headingLine1}
             <br />
-            <span className="text-lime">SHOWCASE</span>
+            <span className="text-lime">{worksPageContent.gallery.headingLine2}</span>
           </h2>
         </div>
         <div className="flex gap-3">
@@ -757,10 +747,10 @@ export default function WorksPage() {
         >
           <div>
             <div className="font-mono text-[11px] tracking-[3px] uppercase text-teal-700 mb-3">
-              Selected Works
+              {worksPageContent.selectedWorks.eyebrow}
             </div>
             <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-teal-800">
-              PROJECTS
+              {worksPageContent.selectedWorks.heading}
             </h2>
           </div>
           <div className="font-display text-[5rem] leading-none text-transparent [-webkit-text-stroke:1.5px_var(--color-teal-700)] opacity-[0.18]">
