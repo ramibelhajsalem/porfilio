@@ -1,148 +1,103 @@
 "use client";
 
-import { useState, useTransition, useRef } from "react";
-import { uploadImage, deleteImage } from "@/lib/supabase/actions";
+import { useMemo, useState, useTransition } from "react";
+import { deleteImage } from "@/lib/supabase/actions";
 import type { PortfolioImage } from "@/lib/supabase/types";
 import Image from "next/image";
 import {
-  Upload,
   Trash2,
   Copy,
   Check,
-  CloudUpload,
   ImageIcon,
+  Plus,
 } from "lucide-react";
-import { Field, Input, Card } from "@/components/admin/form-field";
-
-const SECTIONS = [
-  { value: "general",     label: "General" },
-  { value: "hero",        label: "Hero" },
-  { value: "about",       label: "About" },
-  { value: "workstation", label: "Workstation" },
-  { value: "project",     label: "Project" },
-  { value: "testimonial", label: "Testimonial" },
-];
+import { Card } from "@/components/admin/form-field";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { MediaPickerDialog } from "@/components/admin/media-picker-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { MEDIA_SECTION_OPTIONS } from "@/lib/media";
 
 export default function ImagesClient({ images: initial }: { images: PortfolioImage[] }) {
   const [images, setImages] = useState(initial);
-  const [isPending, startTransition] = useTransition();
-  const [uploadSection, setUploadSection] = useState("general");
-  const [uploadAlt, setUploadAlt] = useState("");
-  const [dragActive, setDragActive] = useState(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [, startTransition] = useTransition();
   const [copied, setCopied] = useState<string | null>(null);
   const [filter, setFilter] = useState("all");
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  function handleFiles(files: FileList | null) {
-    if (!files?.length) return;
-    setUploadError(null);
-    const file = files[0];
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("section", uploadSection);
-    fd.append("alt", uploadAlt || file.name);
-    startTransition(async () => {
-      const result = await uploadImage(fd);
-      if (result?.error) {
-        setUploadError(result.error);
-      } else if (result?.image) {
-        setImages((prev) => [result.image!, ...prev]);
-        setUploadAlt("");
-      }
-    });
-  }
-
-  function handleDrop(e: React.DragEvent) {
-    e.preventDefault();
-    setDragActive(false);
-    handleFiles(e.dataTransfer.files);
-  }
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const { toast } = useToast();
 
   function copyUrl(url: string) {
     navigator.clipboard.writeText(url);
     setCopied(url);
     setTimeout(() => setCopied(null), 2000);
+    toast({
+      title: "URL copied",
+      description: "The asset URL is ready to paste anywhere in the admin.",
+      variant: "success",
+    });
   }
 
   function handleDelete(id: string, storagePath: string | null) {
-    if (!confirm("Delete this image? This cannot be undone.")) return;
-    setImages((prev) => prev.filter((img) => img.id !== id));
-    startTransition(() => deleteImage(id, storagePath));
+    startTransition(async () => {
+      const previous = images;
+      setImages((prev) => prev.filter((img) => img.id !== id));
+      const result = await deleteImage(id, storagePath);
+
+      if (result?.error) {
+        setImages(previous);
+        toast({
+          title: "Delete failed",
+          description: result.error,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Asset deleted",
+        description: "The file was removed from storage and the media library.",
+        variant: "success",
+      });
+    });
   }
 
-  const filtered =
-    filter === "all" ? images : images.filter((img) => img.section === filter);
+  const filtered = useMemo(
+    () => (filter === "all" ? images : images.filter((img) => img.section === filter)),
+    [filter, images]
+  );
 
   return (
     <div className="space-y-6">
-      {/* Upload area */}
       <Card>
-        <h2 className="text-white font-semibold text-sm mb-5">Upload Image</h2>
-        <div
-          onDrop={handleDrop}
-          onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-          onDragLeave={() => setDragActive(false)}
-          onClick={() => fileRef.current?.click()}
-          className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition ${
-            dragActive
-              ? "border-teal-500 bg-teal-500/5"
-              : "border-white/10 hover:border-white/20 hover:bg-white/5"
-          }`}
-        >
-          {isPending ? (
-            <div className="flex flex-col items-center gap-3">
-              <span className="w-8 h-8 border-2 border-teal-500/30 border-t-teal-500 rounded-full animate-spin" />
-              <p className="text-white/50 text-sm">Uploading…</p>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-3">
-              <CloudUpload className="w-10 h-10 text-white/20" />
-              <p className="text-white/60 text-sm font-medium">
-                Drop image here or <span className="text-teal-400">click to browse</span>
-              </p>
-              <p className="text-white/30 text-xs">PNG, JPG, GIF, WebP up to 10MB</p>
-            </div>
-          )}
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-sm font-semibold text-white">Asset Library</h2>
+            <p className="mt-1 text-sm text-white/40">
+              Upload one file or many, drag them in, or paste URLs and keep everything in Supabase.
+            </p>
+          </div>
+          <Button
+            type="button"
+            className="bg-teal-700 text-white hover:bg-teal-600"
+            onClick={() => setPickerOpen(true)}
+          >
+            <Plus />
+            Upload Assets
+          </Button>
         </div>
-
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => handleFiles(e.target.files)}
-        />
-
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <Field label="Section">
-            <select
-              value={uploadSection}
-              onChange={(e) => setUploadSection(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/60 transition appearance-none"
-            >
-              {SECTIONS.map((s) => (
-                <option key={s.value} value={s.value} className="bg-[#0f172a]">
-                  {s.label}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Alt Text">
-            <Input
-              value={uploadAlt}
-              onChange={(e) => setUploadAlt(e.target.value)}
-              placeholder="Descriptive alt text…"
-            />
-          </Field>
-        </div>
-
-        {uploadError && (
-          <p className="mt-3 text-red-400 text-sm">{uploadError}</p>
-        )}
       </Card>
 
-      {/* Filter tabs */}
       <div className="flex items-center gap-2 flex-wrap">
         <button
           onClick={() => setFilter("all")}
@@ -154,7 +109,7 @@ export default function ImagesClient({ images: initial }: { images: PortfolioIma
         >
           All ({images.length})
         </button>
-        {SECTIONS.map((s) => {
+        {MEDIA_SECTION_OPTIONS.map((s) => {
           const count = images.filter((img) => img.section === s.value).length;
           if (!count) return null;
           return (
@@ -223,18 +178,56 @@ export default function ImagesClient({ images: initial }: { images: PortfolioIma
                     <Copy className="w-4 h-4" />
                   )}
                 </button>
-                <button
-                  onClick={() => handleDelete(img.id, img.storage_path)}
-                  title="Delete"
-                  className="p-2.5 bg-red-500/20 hover:bg-red-500/40 rounded-xl text-red-400 transition"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      title="Delete"
+                      className="p-2.5 bg-red-500/20 hover:bg-red-500/40 rounded-xl text-red-400 transition"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogOverlay />
+                  <AlertDialogContent className="max-w-md">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete asset?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This removes the file from storage and the media library. You cannot undo this.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="border-white/10 bg-white/5 text-white hover:bg-white/10">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        className="bg-red-600 text-white hover:bg-red-500"
+                        onClick={() => handleDelete(img.id, img.storage_path)}
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <MediaPickerDialog
+        open={pickerOpen}
+        onOpenChange={setPickerOpen}
+        title="Upload assets"
+        description="Drop one file or many, or paste remote URLs. Confirming will upload to Supabase and add the files to this library."
+        accept="image/*,.pdf,.doc,.docx,.txt,.md,.json,.csv,.zip"
+        multiple
+        sectionOptions={[...MEDIA_SECTION_OPTIONS]}
+        onConfirm={({ assets }) => {
+          if (assets.length) {
+            setImages((prev) => [...assets, ...prev]);
+          }
+        }}
+      />
     </div>
   );
 }

@@ -11,7 +11,9 @@ import {
   PageHeader,
   Card,
 } from "@/components/admin/form-field";
+import { UrlUploadInput } from "@/components/admin/url-upload-input";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import type { PageSection } from "@/lib/supabase/types";
 
 type SectionKey = "hero" | "about" | "workstation" | "contact" | "cta";
 
@@ -39,7 +41,7 @@ export default function SectionsPage() {
       .select("*")
       .then(({ data }) => {
         const map: Record<string, Record<string, string>> = {};
-        data?.forEach((row) => {
+        (data as PageSection[] | null)?.forEach((row) => {
           map[`${row.page}:${row.section}`] = row.content as Record<string, string>;
         });
         setSectionData(map);
@@ -119,7 +121,13 @@ export default function SectionsPage() {
 
               {/* Fields */}
               {isOpen && (
-                <div className="px-5 pb-5 border-t border-white/5">
+                <form
+                  className="px-5 pb-5 border-t border-white/5"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    handleSave(page, key);
+                  }}
+                >
                   <div className="pt-5 space-y-4">
                     {key === "hero" && (
                       <HeroFields
@@ -158,7 +166,7 @@ export default function SectionsPage() {
                       error={errors[key]}
                     />
                   </div>
-                </div>
+                </form>
               )}
             </div>
           );
@@ -218,10 +226,14 @@ function HeroFields({
         />
       </Field>
       <Field label="Profile Photo URL" hint="Use Images section to upload, then paste URL">
-        <Input
+        <UrlUploadInput
           value={content.photo_url ?? ""}
-          onChange={(e) => set("photo_url", e.target.value)}
+          onChange={(value) => set("photo_url", value)}
           placeholder="/images/user1.png"
+          initialSection="hero"
+          accept="image/*"
+          dialogTitle="Select a hero profile image"
+          alt={content.photo_alt ?? "Hero profile image"}
         />
       </Field>
       <Field label="Photo Alt Text">
@@ -290,22 +302,34 @@ function AboutFields({
         />
       </Field>
       <Field label="Inline Image URL">
-        <Input
+        <UrlUploadInput
           value={content.inline_image_url ?? ""}
-          onChange={(e) => set("inline_image_url", e.target.value)}
+          onChange={(value) => set("inline_image_url", value)}
+          initialSection="about"
+          accept="image/*"
+          dialogTitle="Select an about inline image"
+          alt="About inline image"
         />
       </Field>
       <div className="grid grid-cols-2 gap-3">
         <Field label="Grid Image 1 URL">
-          <Input
+          <UrlUploadInput
             value={content.grid_image1_url ?? ""}
-            onChange={(e) => set("grid_image1_url", e.target.value)}
+            onChange={(value) => set("grid_image1_url", value)}
+            initialSection="about"
+            accept="image/*"
+            dialogTitle="Select about grid image 1"
+            alt="About grid image 1"
           />
         </Field>
         <Field label="Grid Image 2 URL">
-          <Input
+          <UrlUploadInput
             value={content.grid_image2_url ?? ""}
-            onChange={(e) => set("grid_image2_url", e.target.value)}
+            onChange={(value) => set("grid_image2_url", value)}
+            initialSection="about"
+            accept="image/*"
+            dialogTitle="Select about grid image 2"
+            alt="About grid image 2"
           />
         </Field>
       </div>
@@ -357,10 +381,14 @@ function WorkstationFields({
           </p>
           <div className="space-y-2">
             <Field label="URL">
-              <Input
+              <UrlUploadInput
                 value={images[i]?.url ?? ""}
-                onChange={(e) => setImage(i, "url", e.target.value)}
+                onChange={(value) => setImage(i, "url", value)}
                 placeholder="https://…"
+                initialSection="workstation"
+                accept="image/*"
+                dialogTitle={`Select workstation image ${i + 1}`}
+                alt={images[i]?.alt ?? `Workstation image ${i + 1}`}
               />
             </Field>
             <Field label="Alt text">

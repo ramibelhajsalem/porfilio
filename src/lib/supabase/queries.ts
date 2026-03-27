@@ -146,25 +146,25 @@ export async function getPageSection(
 export async function getHeroContent(): Promise<HeroSectionContent> {
   const section = await getPageSection("home", "hero");
   if (!section) return defaultHeroContent;
-  return section.content as HeroSectionContent;
+  return section.content as unknown as HeroSectionContent;
 }
 
 export async function getAboutContent(): Promise<AboutSectionContent> {
   const section = await getPageSection("home", "about");
   if (!section) return defaultAboutContent;
-  return section.content as AboutSectionContent;
+  return section.content as unknown as AboutSectionContent;
 }
 
 export async function getWorkstationContent(): Promise<WorkstationSectionContent> {
   const section = await getPageSection("home", "workstation");
   if (!section) return defaultWorkstationContent;
-  return section.content as WorkstationSectionContent;
+  return section.content as unknown as WorkstationSectionContent;
 }
 
 export async function getContactContent(): Promise<ContactSectionContent> {
   const section = await getPageSection("contact", "hero");
   if (!section) return defaultContactContent;
-  return section.content as ContactSectionContent;
+  return section.content as unknown as ContactSectionContent;
 }
 
 // ─── Site Config ───────────────────────────────────────────────
@@ -181,7 +181,29 @@ export async function getSiteConfig(
     .eq("key", key)
     .single();
 
-  return data?.value ?? null;
+  return (data as { value: string | null } | null)?.value ?? null;
+}
+
+export async function getSiteConfigMap(keys?: string[]) {
+  if (!isSupabaseConfigured()) return {};
+
+  const { createClient } = await import("./server");
+  const supabase = await createClient();
+
+  let query = supabase.from("site_config").select("key, value");
+
+  if (keys?.length) {
+    query = query.in("key", keys);
+  }
+
+  const { data } = await query;
+
+  return ((data ?? []) as Array<{ key: string; value: string | null }>).reduce<
+    Record<string, string | null>
+  >((acc, row) => {
+    acc[row.key] = row.value;
+    return acc;
+  }, {});
 }
 
 // ─── Static fallback shapes ────────────────────────────────────

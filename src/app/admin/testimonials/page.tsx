@@ -15,6 +15,7 @@ import {
   PageHeader,
   Card,
 } from "@/components/admin/form-field";
+import { UrlUploadInput } from "@/components/admin/url-upload-input";
 import type { Testimonial } from "@/lib/supabase/types";
 import { Plus, Pencil, Trash2, X, Check, Quote } from "lucide-react";
 
@@ -43,7 +44,7 @@ export default function TestimonialsPage() {
       .select("*")
       .order("order_index")
       .then(({ data }) => {
-        setItems(data ?? []);
+        setItems((data ?? []) as Testimonial[]);
         setLoading(false);
       });
   }, []);
@@ -93,14 +94,18 @@ export default function TestimonialsPage() {
   function handleDelete(id: string) {
     if (!confirm("Delete this testimonial?")) return;
     setItems((prev) => prev.filter((t) => t.id !== id));
-    startTransition(() => deleteTestimonial(id));
+    startTransition(async () => {
+      await deleteTestimonial(id);
+    });
   }
 
   function toggleActive(t: Testimonial) {
     setItems((prev) =>
       prev.map((x) => (x.id === t.id ? { ...x, is_active: !x.is_active } : x))
     );
-    startTransition(() => updateTestimonial(t.id, { is_active: !t.is_active }));
+    startTransition(async () => {
+      await updateTestimonial(t.id, { is_active: !t.is_active });
+    });
   }
 
   if (loading)
@@ -177,10 +182,14 @@ export default function TestimonialsPage() {
                 />
               </Field>
               <Field label="Avatar URL">
-                <Input
+                <UrlUploadInput
                   value={form.avatar_url ?? ""}
-                  onChange={(e) => set("avatar_url", e.target.value || null)}
+                  onChange={(value) => set("avatar_url", value || null)}
                   placeholder="https://…"
+                  initialSection="testimonial"
+                  accept="image/*"
+                  dialogTitle="Select a testimonial avatar"
+                  alt={form.client_name ? `${form.client_name} avatar` : "Client avatar"}
                 />
               </Field>
             </div>

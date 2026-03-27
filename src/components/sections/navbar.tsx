@@ -18,9 +18,12 @@ export default function Navbar() {
     >
       <div className="px-4 md:px-5 py-4 flex items-start justify-between">
         {/* Logo */}
-        <a href="/" className="text-[1.9rem] font-bold text-black/85 tracking-tight font-dancing">
+        <Link
+          href="/"
+          className="text-[1.9rem] font-bold text-black/85 tracking-tight font-dancing"
+        >
           Nidhal
-        </a>
+        </Link>
 
         {/* Desktop Nav Links - grouped in a bordered container */}
         <div className="hidden md:flex items-center rounded-full px-2 py-2.5 bg-white">

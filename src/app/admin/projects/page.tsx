@@ -3,6 +3,7 @@ import ProjectsList from "./projects-list";
 import { PageHeader } from "@/components/admin/form-field";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import type { Project } from "@/lib/supabase/types";
 
 export default async function ProjectsPage() {
   const supabase = await createClient();
@@ -10,6 +11,7 @@ export default async function ProjectsPage() {
     .from("projects")
     .select("*")
     .order("order_index");
+  const projectList = (projects ?? []) as Project[];
 
   return (
     <div className="p-8">
@@ -26,7 +28,7 @@ export default async function ProjectsPage() {
           </Link>
         }
       />
-      <ProjectsList projects={projects ?? []} />
+      <ProjectsList projects={projectList} />
     </div>
   );
 }

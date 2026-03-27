@@ -11,6 +11,7 @@ import {
   SaveBar,
   Card,
 } from "@/components/admin/form-field";
+import { UrlUploadInput } from "@/components/admin/url-upload-input";
 import type { Project } from "@/lib/supabase/types";
 import Image from "next/image";
 import { X, Plus } from "lucide-react";
@@ -156,10 +157,14 @@ export default function ProjectForm({
         <h2 className="text-white font-semibold text-sm mb-5">Media & Links</h2>
         <div className="space-y-4">
           <Field label="Cover Image URL" hint="Use the Images section to upload, then paste the URL">
-            <Input
+            <UrlUploadInput
               value={form.image_url ?? ""}
-              onChange={(e) => set("image_url", e.target.value)}
+              onChange={(value) => set("image_url", value)}
               placeholder="https://images.unsplash.com/…"
+              initialSection="project"
+              accept="image/*"
+              dialogTitle="Select a project cover"
+              alt={form.title || "Project cover image"}
             />
           </Field>
           {form.image_url && (

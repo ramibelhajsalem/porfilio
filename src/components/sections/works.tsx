@@ -128,9 +128,9 @@ export default function Works({ projects }: { projects: Project[] }) {
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
           >
-            {projects.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
+	            {projects.map((project) => (
+	              <ProjectCard key={project.id} project={project} />
+	            ))}
           </motion.div>
         </div>
 
@@ -173,10 +173,8 @@ export default function Works({ projects }: { projects: Project[] }) {
 /* ── Project Card ── */
 function ProjectCard({
   project,
-  index,
 }: {
   project: Project;
-  index: number;
 }) {
   const [hovered, setHovered] = useState(false);
 

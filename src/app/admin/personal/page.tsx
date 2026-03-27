@@ -12,6 +12,7 @@ import {
   PageHeader,
   Card,
 } from "@/components/admin/form-field";
+import { UrlUploadInput } from "@/components/admin/url-upload-input";
 import type { PersonalInfo } from "@/lib/supabase/types";
 
 export default function PersonalInfoPage() {
@@ -28,7 +29,7 @@ export default function PersonalInfoPage() {
       .select("*")
       .single()
       .then(({ data }) => {
-        if (data) setInfo(data);
+        if (data) setInfo(data as PersonalInfo);
         setLoading(false);
       });
   }, []);
@@ -182,10 +183,14 @@ export default function PersonalInfoPage() {
         <Card>
           <h2 className="text-white font-semibold text-sm mb-5">Profile Photo</h2>
           <Field label="Avatar URL" hint="URL to your profile photo. Upload via Images section and paste the URL here.">
-            <Input
+            <UrlUploadInput
               value={info.avatar_url ?? ""}
-              onChange={(e) => set("avatar_url", e.target.value)}
+              onChange={(value) => set("avatar_url", value)}
               placeholder="/images/user1.png or https://…"
+              initialSection="general"
+              accept="image/*"
+              dialogTitle="Select a profile photo"
+              alt={info.name ? `${info.name} profile photo` : "Profile photo"}
             />
           </Field>
           {info.avatar_url && (

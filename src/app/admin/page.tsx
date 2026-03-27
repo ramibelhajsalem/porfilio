@@ -10,9 +10,14 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import Link from "next/link";
+import type { ContactSubmission } from "@/lib/supabase/types";
 
 export default async function AdminDashboard() {
   const supabase = await createClient();
+  type RecentMessage = Pick<
+    ContactSubmission,
+    "id" | "name" | "email" | "message" | "created_at" | "is_read"
+  >;
 
   const [
     { count: totalProjects },
@@ -90,6 +95,7 @@ export default async function AdminDashboard() {
     rose:   "bg-rose-500/10 text-rose-400 border-rose-500/20",
     sky:    "bg-sky-500/10 text-sky-400 border-sky-500/20",
   };
+  const recentMessagesList = (recentMessages ?? []) as RecentMessage[];
 
   return (
     <div className="p-8">
@@ -134,12 +140,12 @@ export default async function AdminDashboard() {
             </Link>
           </div>
           <div className="space-y-3">
-            {!recentMessages?.length && (
+            {!recentMessagesList.length && (
               <p className="text-white/30 text-sm text-center py-6">
                 No messages yet
               </p>
             )}
-            {recentMessages?.map((msg) => (
+            {recentMessagesList.map((msg) => (
               <div
                 key={msg.id}
                 className="flex items-start gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/8 transition group"

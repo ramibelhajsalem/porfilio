@@ -21,13 +21,17 @@ export default function ProjectsList({ projects: initial }: { projects: Project[
     setProjects((prev) =>
       prev.map((p) => (p.id === id ? { ...p, is_hidden: !currentlyHidden } : p))
     );
-    startTransition(() => toggleProjectVisibility(id, !currentlyHidden));
+    startTransition(async () => {
+      await toggleProjectVisibility(id, !currentlyHidden);
+    });
   }
 
   function handleDelete(id: string) {
     if (!confirm("Delete this project? This cannot be undone.")) return;
     setProjects((prev) => prev.filter((p) => p.id !== id));
-    startTransition(() => deleteProject(id));
+    startTransition(async () => {
+      await deleteProject(id);
+    });
   }
 
   function handleDragStart(id: string) {
@@ -51,7 +55,9 @@ export default function ProjectsList({ projects: initial }: { projects: Project[
     const [moved] = reordered.splice(from, 1);
     reordered.splice(to, 0, moved);
     setProjects(reordered);
-    startTransition(() => reorderProjects(reordered.map((p) => p.id)));
+    startTransition(async () => {
+      await reorderProjects(reordered.map((p) => p.id));
+    });
     setDragging(null);
     setDragOver(null);
   }

@@ -1,5 +1,11 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input as UIInput } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Textarea as UITextarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+
 interface FieldProps {
   label: string;
   hint?: string;
@@ -25,12 +31,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({ className = "", ...props }: InputProps) {
-  return (
-    <input
-      {...props}
-      className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/30 transition ${className}`}
-    />
-  );
+  return <UIInput {...props} className={className} />;
 }
 
 interface TextareaProps
@@ -39,12 +40,7 @@ interface TextareaProps
 }
 
 export function Textarea({ className = "", ...props }: TextareaProps) {
-  return (
-    <textarea
-      {...props}
-      className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/30 transition resize-none ${className}`}
-    />
-  );
+  return <UITextarea {...props} className={cn("resize-none", className)} />;
 }
 
 interface ToggleProps {
@@ -57,21 +53,7 @@ interface ToggleProps {
 export function Toggle({ checked, onChange, label, description }: ToggleProps) {
   return (
     <div className="flex items-start gap-3">
-      <button
-        type="button"
-        role="switch"
-        aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={`relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0 mt-0.5 ${
-          checked ? "bg-teal-600" : "bg-white/10"
-        }`}
-      >
-        <span
-          className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${
-            checked ? "translate-x-5" : "translate-x-0"
-          }`}
-        />
-      </button>
+      <Switch checked={checked} onCheckedChange={onChange} className="mt-0.5" />
       <div>
         <p className="text-sm font-medium text-white/80">{label}</p>
         {description && (
@@ -91,10 +73,10 @@ interface SaveBarProps {
 export function SaveBar({ isPending, saved, error }: SaveBarProps) {
   return (
     <div className="flex items-center gap-4 pt-6 border-t border-white/8">
-      <button
+      <Button
         type="submit"
         disabled={isPending}
-        className="px-6 py-2.5 bg-teal-700 hover:bg-teal-600 disabled:opacity-60 text-white text-sm font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
+        className="h-11 rounded-xl bg-teal-700 px-6 text-white hover:bg-teal-600"
       >
         {isPending ? (
           <>
@@ -104,7 +86,7 @@ export function SaveBar({ isPending, saved, error }: SaveBarProps) {
         ) : (
           "Save Changes"
         )}
-      </button>
+      </Button>
       {saved && !isPending && (
         <span className="text-teal-400 text-sm">Saved ✓</span>
       )}
@@ -137,7 +119,7 @@ export function PageHeader({
 
 export function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-white/5 border border-white/8 rounded-2xl p-6 ${className}`}>
+    <div className={`bg-white/5 border border-white/8 rounded-2xl p-6 shadow-[0_1px_0_rgba(255,255,255,0.03)] ${className}`}>
       {children}
     </div>
   );

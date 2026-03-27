@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import MessagesClient from "./messages-client";
 import { PageHeader } from "@/components/admin/form-field";
+import type { ContactSubmission } from "@/lib/supabase/types";
 
 export default async function MessagesPage() {
   const supabase = await createClient();
@@ -10,7 +11,8 @@ export default async function MessagesPage() {
     .eq("is_archived", false)
     .order("created_at", { ascending: false });
 
-  const unreadCount = messages?.filter((m) => !m.is_read).length ?? 0;
+  const messagesList = (messages ?? []) as ContactSubmission[];
+  const unreadCount = messagesList.filter((message) => !message.is_read).length;
 
   return (
     <div className="p-8">
@@ -18,7 +20,7 @@ export default async function MessagesPage() {
         title="Messages"
         description={`${unreadCount} unread message${unreadCount !== 1 ? "s" : ""}`}
       />
-      <MessagesClient messages={messages ?? []} />
+      <MessagesClient messages={messagesList} />
     </div>
   );
 }

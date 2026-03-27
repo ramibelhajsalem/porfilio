@@ -694,9 +694,9 @@ export default function ContactPage() {
                   </div>
 
                   {/* Submit */}
-                  <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-6">
-                    <AnimatePresence mode="wait">
-                      {submitted ? (
+	                  <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-6">
+	                    <AnimatePresence mode="wait">
+	                      {submitted ? (
                         <motion.div
                           key="success"
                           className="flex items-center gap-3 text-lime"
@@ -709,25 +709,32 @@ export default function ContactPage() {
                             Message sent! I&apos;ll be in touch soon.
                           </span>
                         </motion.div>
-                      ) : (
-                        <motion.div
-                          key="button"
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                        >
-                          <MagneticButton type="submit">
-                            <span>Send message</span>
-                            <Send className="w-4 h-4" />
-                          </MagneticButton>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+	                      ) : (
+	                        <motion.div
+	                          key="button"
+	                          initial={{ opacity: 0, y: 10 }}
+	                          animate={{ opacity: 1, y: 0 }}
+	                          exit={{ opacity: 0, y: -10 }}
+	                        >
+	                          <MagneticButton type="submit" disabled={isPending}>
+	                            <span>{isPending ? "Sending..." : "Send message"}</span>
+	                            <Send className="w-4 h-4" />
+	                          </MagneticButton>
+	                        </motion.div>
+	                      )}
+	                    </AnimatePresence>
 
-                    <p className="text-cream-400/45 text-[0.5rem] uppercase tracking-[0.15em] max-w-[200px]">
-                      I typically respond within 24 hours
-                    </p>
-                  </div>
+	                    <div className="space-y-2">
+	                      <p className="text-cream-400/45 text-[0.5rem] uppercase tracking-[0.15em] max-w-[200px]">
+	                        I typically respond within 24 hours
+	                      </p>
+	                      {submitError ? (
+	                        <p className="text-[0.6rem] uppercase tracking-[0.12em] text-red-300/80">
+	                          {submitError}
+	                        </p>
+	                      ) : null}
+	                    </div>
+	                  </div>
                 </form>
               </div>
             </motion.div>

@@ -4,6 +4,7 @@ import ProjectForm from "../project-form";
 import { PageHeader } from "@/components/admin/form-field";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import type { Project } from "@/lib/supabase/types";
 
 export default async function EditProjectPage({
   params,
@@ -17,8 +18,9 @@ export default async function EditProjectPage({
     .select("*")
     .eq("id", id)
     .single();
+  const projectRecord = project as Project | null;
 
-  if (!project) notFound();
+  if (!projectRecord) notFound();
 
   return (
     <div className="p-8">
@@ -31,11 +33,11 @@ export default async function EditProjectPage({
           Back to Projects
         </Link>
         <PageHeader
-          title={`Edit: ${project.title}`}
+          title={`Edit: ${projectRecord.title}`}
           description="Update project details, images, and visibility."
         />
       </div>
-      <ProjectForm project={project} mode="edit" />
+      <ProjectForm project={projectRecord} mode="edit" />
     </div>
   );
 }

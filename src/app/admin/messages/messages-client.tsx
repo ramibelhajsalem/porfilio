@@ -24,7 +24,9 @@ export default function MessagesClient({
           setMessages((prev) =>
             prev.map((m) => (m.id === id ? { ...m, is_read: true } : m))
           );
-          startTransition(() => markMessageRead(id));
+          startTransition(async () => {
+            await markMessageRead(id);
+          });
         }
       }
       return next;
@@ -33,7 +35,9 @@ export default function MessagesClient({
 
   function handleArchive(id: string) {
     setMessages((prev) => prev.filter((m) => m.id !== id));
-    startTransition(() => archiveMessage(id));
+    startTransition(async () => {
+      await archiveMessage(id);
+    });
   }
 
   const formatDate = (iso: string) =>
