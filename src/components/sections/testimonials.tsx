@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import type { Testimonial } from "@/lib/supabase/types";
+import type { Testimonial } from "@/content/portfolio.types";
 import { scrollReveal, staggerContainer, animationVariants } from "@/lib/utils";
 
 const fallbackAvatars = [
@@ -10,21 +10,25 @@ const fallbackAvatars = [
   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=250&fit=crop&crop=faces",
 ];
 
-export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
+export default function Testimonials({
+  heading,
+  testimonials,
+}: {
+  heading: string;
+  testimonials: Testimonial[];
+}) {
   return (
     <section id="testimonials" className="bg-cream-50 py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        {/* Heading */}
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
         <motion.h2
-          className="font-display text-[2rem] md:text-[3.5rem] lg:text-[5rem] font-bold text-teal-700 uppercase leading-[0.85] text-center mb-14 md:mb-20 tracking-tighter"
+          className="mb-14 text-center font-display text-[2rem] font-bold uppercase leading-[0.85] tracking-tighter text-teal-700 md:mb-20 md:text-[3.5rem] lg:text-[5rem]"
           {...scrollReveal}
         >
-          What People Says About Me
+          {heading}
         </motion.h2>
 
-        {/* Testimonial Cards */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14"
+          className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14"
           variants={staggerContainer}
           initial="hidden"
           whileInView="animate"
@@ -36,12 +40,11 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
               className="flex gap-4 md:gap-6"
               variants={animationVariants.slideUp}
             >
-              {/* Avatar */}
               <div className="flex-shrink-0">
-                <div className="relative w-16 h-20 md:w-24 md:h-28 rounded-xl overflow-hidden shadow-sm">
+                <div className="relative h-20 w-16 overflow-hidden rounded-xl shadow-sm md:h-28 md:w-24">
                   <Image
-                    src={testimonial.avatar_url ?? fallbackAvatars[index % fallbackAvatars.length]}
-                    alt={testimonial.client_name}
+                    src={testimonial.avatarUrl || fallbackAvatars[index % fallbackAvatars.length]}
+                    alt={testimonial.clientName}
                     fill
                     className="object-cover"
                     sizes="96px"
@@ -49,18 +52,17 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
                 </div>
               </div>
 
-              {/* Content */}
               <div className="space-y-3">
-                <p className="text-xs md:text-sm text-teal-800 leading-relaxed">
+                <p className="text-xs leading-relaxed text-teal-800 md:text-sm">
                   {testimonial.quote}
                 </p>
                 <div>
-                  <h4 className="font-display text-sm md:text-base font-bold text-teal-700 uppercase">
-                    {testimonial.client_name}
+                  <h4 className="font-display text-sm font-bold uppercase text-teal-700 md:text-base">
+                    {testimonial.clientName}
                   </h4>
-                  <p className="text-[10px] md:text-xs text-teal-600 uppercase tracking-wider">
-                    {testimonial.client_role}
-                    {testimonial.client_company ? ` · ${testimonial.client_company}` : ""}
+                  <p className="text-[10px] uppercase tracking-wider text-teal-600 md:text-xs">
+                    {testimonial.clientRole}
+                    {testimonial.clientCompany ? ` · ${testimonial.clientCompany}` : ""}
                   </p>
                 </div>
               </div>

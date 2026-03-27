@@ -2,28 +2,24 @@ import Hero from "@/components/sections/hero";
 import Works from "@/components/sections/works";
 import About from "@/components/sections/about";
 import Workstation from "@/components/sections/workstation";
-import {
-  getProjects,
-  getHeroContent,
-  getAboutContent,
-  getWorkstationContent,
-} from "@/lib/supabase/queries";
+import { portfolio } from "@/content/portfolio";
 
 export default async function Home() {
-  const [projects, heroContent, aboutContent, workstationContent] =
-    await Promise.all([
-      getProjects(),
-      getHeroContent(),
-      getAboutContent(),
-      getWorkstationContent(),
-    ]);
+  const projects = portfolio.projects
+    .filter((project) => !project.isHidden)
+    .sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
     <>
-      <Hero content={heroContent} />
-      <Works projects={projects} />
-      <About content={aboutContent} />
-      <Workstation content={workstationContent} />
+      <Hero
+        content={portfolio.homePage.hero}
+        siteName={portfolio.site.name}
+        navLinks={portfolio.navigation.main.filter((item) => item.isActive)}
+        socialLinks={portfolio.socialLinks.filter((item) => item.isActive)}
+      />
+      <Works projects={projects} content={portfolio.homePage.works} />
+      <About content={portfolio.homePage.about} />
+      <Workstation content={portfolio.homePage.workstation} />
     </>
   );
 }

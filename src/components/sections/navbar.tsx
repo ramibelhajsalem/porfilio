@@ -3,10 +3,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { navLinks, socialLinks } from "@/lib/constants";
 import Link from "next/link";
+import type { NavLink, SocialLink } from "@/content/portfolio.types";
 
-export default function Navbar() {
+export default function Navbar({
+  siteName,
+  navLinks,
+  socialLinks,
+}: {
+  siteName: string;
+  navLinks: NavLink[];
+  socialLinks: SocialLink[];
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -16,23 +24,22 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="px-4 md:px-5 py-4 flex items-start justify-between">
-        {/* Logo */}
+      <div className="flex items-start justify-between px-4 py-4 md:px-5">
         <Link
           href="/"
-          className="text-[1.9rem] font-bold text-black/85 tracking-tight font-dancing"
+          className="font-dancing text-[1.9rem] font-bold tracking-tight text-black/85"
         >
-          Nidhal
+          {siteName}
         </Link>
 
-        {/* Desktop Nav Links - grouped in a bordered container */}
-        <div className="hidden md:flex items-center rounded-full px-2 py-2.5 bg-white">
+        <div className="hidden items-center rounded-full bg-white px-2 py-2.5 md:flex">
           <ul className="flex items-center gap-0">
             {navLinks.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-[0.72rem] font-medium text-black/85 transition-colors uppercase tracking-[0.09em] px-5 py-1.5 rounded-full block"
+                  target={link.openNewTab ? "_blank" : undefined}
+                  className="block rounded-full px-5 py-1.5 text-[0.72rem] font-medium uppercase tracking-[0.09em] text-black/85 transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -41,30 +48,29 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* Social Links - Desktop - Vertical Stack */}
-        <ul className="hidden md:flex flex-col items-end gap-0.5">
+        <ul className="hidden flex-col items-end gap-0.5 md:flex">
           {socialLinks.map((link) => (
-            <li key={link.name}>
+            <li key={link.platform}>
               <a
                 href={link.href}
-                className="text-[0.65rem] font-medium text-black/85 hover:text-teal-700 transition-colors uppercase tracking-[0.14em]"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[0.65rem] font-medium uppercase tracking-[0.14em] text-black/85 transition-colors hover:text-teal-700"
               >
-                {link.name}
+                {link.label}
               </a>
             </li>
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-teal-700"
+          className="text-teal-700 md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -72,27 +78,30 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden bg-cream-50 border-t border-cream-200"
+            className="overflow-hidden border-t border-cream-200 bg-cream-50 md:hidden"
           >
-            <div className="px-4 py-6 space-y-4">
+            <div className="space-y-4 px-4 py-6">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
-                  className="block text-lg font-medium text-teal-800 uppercase tracking-wider"
+                  target={link.openNewTab ? "_blank" : undefined}
+                  className="block text-lg font-medium uppercase tracking-wider text-teal-800"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <div className="flex gap-4 pt-4 border-t border-cream-200">
+              <div className="flex gap-4 border-t border-cream-200 pt-4">
                 {socialLinks.map((link) => (
                   <a
-                    key={link.name}
+                    key={link.platform}
                     href={link.href}
-                    className="text-sm text-teal-700 uppercase"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm uppercase text-teal-700"
                   >
-                    {link.name}
+                    {link.label}
                   </a>
                 ))}
               </div>

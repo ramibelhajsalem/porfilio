@@ -1,27 +1,32 @@
 import ContactCTA from "@/components/sections/contact-cta";
 import Footer from "@/components/sections/footer";
 import Testimonials from "@/components/sections/testimonials";
-import { getTestimonials } from "@/lib/supabase/queries";
+import { portfolio } from "@/content/portfolio";
 
 export default async function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const testimonials = await getTestimonials();
+  const testimonials = portfolio.testimonials
+    .filter((testimonial) => testimonial.isActive)
+    .sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
     <main className="flex flex-col w-full p-4 gap-4">
-      {/* Page content */}
       {children}
-
-      {/* Testimonials — data from Supabase */}
-      <Testimonials testimonials={testimonials} />
-
-      {/* Shared ContactCTA + Footer */}
+      <Testimonials
+        heading={portfolio.homePage.testimonials.heading}
+        testimonials={testimonials}
+      />
       <div className="w-full h-px bg-gray-200" />
-      <ContactCTA />
-      <Footer />
+      <ContactCTA content={portfolio.homePage.contactCta} />
+      <Footer
+        site={portfolio.site}
+        footer={portfolio.footer}
+        quickLinks={portfolio.navigation.footer.filter((item) => item.isActive)}
+        socialLinks={portfolio.socialLinks.filter((item) => item.isActive)}
+      />
     </main>
   );
 }

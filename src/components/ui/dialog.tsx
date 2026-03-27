@@ -11,6 +11,12 @@ type DialogContextValue = {
   setOpen: (open: boolean) => void;
 };
 
+type DialogTriggerElementProps = {
+  onClick?: (event: React.MouseEvent<Element>) => void;
+};
+
+type DialogTriggerElement = React.ReactElement<DialogTriggerElementProps>;
+
 const DialogContext = React.createContext<DialogContextValue | null>(null);
 
 function useDialogContext() {
@@ -53,7 +59,7 @@ function Dialog({ open, defaultOpen, onOpenChange, children }: DialogProps) {
 
 type DialogTriggerProps = {
   asChild?: boolean;
-  children: React.ReactElement<any>;
+  children: DialogTriggerElement;
 };
 
 function DialogTrigger({ asChild = false, children }: DialogTriggerProps) {
@@ -237,7 +243,7 @@ function DialogClose({
   children,
 }: {
   asChild?: boolean;
-  children: React.ReactElement<any>;
+  children: DialogTriggerElement;
 }) {
   const { setOpen } = useDialogContext();
 

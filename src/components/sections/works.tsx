@@ -1,22 +1,16 @@
 "use client";
 
 import { useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { scrollReveal } from "@/lib/utils";
-import type { Project } from "@/lib/supabase/types";
 import Link from "next/link";
+import { scrollReveal } from "@/lib/utils";
+import type { HomeWorksContent, Project } from "@/content/portfolio.types";
 
-/* ── Card dimensions ── */
 const CARD_W = 380;
 const CARD_GAP = 24;
 
-/* ── Stagger variants ── */
 const containerVariants = {
   hidden: {},
   show: {
@@ -34,18 +28,19 @@ const cardVariants = {
   },
 };
 
-export default function Works({ projects }: { projects: Project[] }) {
+export default function Works({
+  projects,
+  content,
+}: {
+  projects: Project[];
+  content: HomeWorksContent;
+}) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  /* ── Drag physics ── */
   const x = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 300, damping: 40 });
-
-  /* ── Max drag extent ── */
   const maxDrag = -(projects.length * (CARD_W + CARD_GAP) - CARD_W);
 
-  /* ── Navigate carousel ── */
   const scrollTo = (index: number) => {
     const clamped = Math.max(0, Math.min(index, projects.length - 1));
     setActiveIndex(clamped);
@@ -53,30 +48,27 @@ export default function Works({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <section id="works" className="relative bg-white py-20 md:py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        {/* ── Header row ── */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+    <section id="works" className="relative overflow-hidden bg-white py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div>
             <motion.h2
-              className="font-display text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-bold text-teal-700 uppercase leading-none tracking-tighter"
+              className="font-display text-[3rem] font-bold uppercase leading-none tracking-tighter text-teal-700 md:text-[4.5rem] lg:text-[5.5rem]"
               {...scrollReveal}
             >
-              Works
+              {content.title}
             </motion.h2>
             <motion.p
-              className="mt-4 text-sm md:text-base text-teal-800/50 max-w-md leading-relaxed"
+              className="mt-4 max-w-md text-sm leading-relaxed text-teal-800/50 md:text-base"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               viewport={{ once: true }}
             >
-              During his professional experiences, Albert had the opportunity to
-              work on a wide variety of projects.
+              {content.description}
             </motion.p>
           </div>
 
-          {/* Navigation arrows */}
           <motion.div
             className="flex items-center gap-3"
             initial={{ opacity: 0 }}
@@ -87,24 +79,23 @@ export default function Works({ projects }: { projects: Project[] }) {
             <button
               onClick={() => scrollTo(activeIndex - 1)}
               disabled={activeIndex === 0}
-              className="w-12 h-12 rounded-full border border-teal-700/20 flex items-center justify-center text-teal-700 hover:bg-teal-700 hover:text-cream-50 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-teal-700 transition-all duration-300"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-teal-700/20 text-teal-700 transition-all duration-300 hover:bg-teal-700 hover:text-cream-50 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-teal-700"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={() => scrollTo(activeIndex + 1)}
               disabled={activeIndex === projects.length - 1}
-              className="w-12 h-12 rounded-full border border-teal-700/20 flex items-center justify-center text-teal-700 hover:bg-teal-700 hover:text-cream-50 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-teal-700 transition-all duration-300"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-teal-700/20 text-teal-700 transition-all duration-300 hover:bg-teal-700 hover:text-cream-50 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-teal-700"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="h-5 w-5" />
             </button>
-            <span className="ml-3 text-xs font-medium text-teal-700/40 tabular-nums tracking-wider">
+            <span className="ml-3 text-xs font-medium tracking-wider text-teal-700/40 tabular-nums">
               {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
             </span>
           </motion.div>
         </div>
 
-        {/* ── Carousel ── */}
         <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={carouselRef}>
           <motion.div
             className="flex"
@@ -128,23 +119,18 @@ export default function Works({ projects }: { projects: Project[] }) {
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
           >
-	            {projects.map((project) => (
-	              <ProjectCard key={project.id} project={project} />
-	            ))}
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
           </motion.div>
         </div>
 
-        {/* ── Progress dots ── */}
-        <div className="flex items-center justify-center gap-2 mt-10">
-          {projects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              className="group p-1"
-            >
+        <div className="mt-10 flex items-center justify-center gap-2">
+          {projects.map((_, index) => (
+            <button key={index} onClick={() => scrollTo(index)} className="group p-1">
               <div
                 className={`h-1.5 rounded-full transition-all duration-500 ${
-                  i === activeIndex
+                  index === activeIndex
                     ? "w-8 bg-teal-700"
                     : "w-1.5 bg-teal-700/20 group-hover:bg-teal-700/40"
                 }`}
@@ -153,7 +139,6 @@ export default function Works({ projects }: { projects: Project[] }) {
           ))}
         </div>
 
-        {/* ── View All button ── */}
         <motion.div
           className="mt-12 text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -161,8 +146,11 @@ export default function Works({ projects }: { projects: Project[] }) {
           transition={{ delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <Link href="/works" className="border border-teal-800/30 text-teal-800 px-8 py-3 rounded-full text-xs font-medium uppercase tracking-[0.15em] hover:bg-teal-700 hover:text-cream-50 hover:border-teal-700 transition-all duration-300 inline-flex items-center gap-2 hover:gap-3">
-            View All Projects <ArrowUpRight className="w-3.5 h-3.5" />
+          <Link
+            href="/works"
+            className="inline-flex items-center gap-2 rounded-full border border-teal-800/30 px-8 py-3 text-xs font-medium uppercase tracking-[0.15em] text-teal-800 transition-all duration-300 hover:gap-3 hover:border-teal-700 hover:bg-teal-700 hover:text-cream-50"
+          >
+            {content.viewAllLabel} <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </motion.div>
       </div>
@@ -170,26 +158,19 @@ export default function Works({ projects }: { projects: Project[] }) {
   );
 }
 
-/* ── Project Card ── */
-function ProjectCard({
-  project,
-}: {
-  project: Project;
-}) {
+function ProjectCard({ project }: { project: Project }) {
   const [hovered, setHovered] = useState(false);
-
-  /* Parallax tilt on hover */
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const smoothRotateX = useSpring(rotateX, { stiffness: 200, damping: 20 });
   const smoothRotateY = useSpring(rotateY, { stiffness: 200, damping: 20 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    rotateX.set(((e.clientY - centerY) / rect.height) * -8);
-    rotateY.set(((e.clientX - centerX) / rect.width) * 8);
+    rotateX.set(((event.clientY - centerY) / rect.height) * -8);
+    rotateY.set(((event.clientX - centerX) / rect.width) * 8);
   };
 
   const handleMouseLeave = () => {
@@ -205,7 +186,7 @@ function ProjectCard({
       variants={cardVariants}
     >
       <motion.div
-        className="relative bg-white/70 backdrop-blur-xl border border-white/60 rounded-3xl overflow-hidden h-[520px] flex flex-col shadow-[0_4px_24px_-4px_rgba(15,77,62,0.08)] hover:shadow-[0_20px_60px_-12px_rgba(15,77,62,0.18)] transition-shadow duration-500"
+        className="relative flex h-[520px] flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/70 backdrop-blur-xl shadow-[0_4px_24px_-4px_rgba(15,77,62,0.08)] transition-shadow duration-500 hover:shadow-[0_20px_60px_-12px_rgba(15,77,62,0.18)]"
         style={{
           rotateX: smoothRotateX,
           rotateY: smoothRotateY,
@@ -215,62 +196,51 @@ function ProjectCard({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Image area */}
         <div className="relative h-[280px] overflow-hidden">
           <Image
-            src={project.image_url ?? "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=700&fit=crop"}
+            src={project.imageUrl}
             alt={project.title}
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             sizes="400px"
           />
-
-          {/* Gradient scrim */}
-          <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Category badge */}
-          <div className="absolute top-4 left-4 px-3 py-1.5 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-[10px] font-medium text-white uppercase tracking-wider">
+          <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div className="absolute top-4 left-4 rounded-full border border-white/30 bg-white/20 px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white backdrop-blur-md">
             {project.category}
           </div>
-
-          {/* Year badge */}
-          <div className="absolute top-4 right-4 px-3 py-1.5 bg-teal-700/80 backdrop-blur-md rounded-full text-[10px] font-medium text-white tabular-nums">
+          <div className="absolute top-4 right-4 rounded-full bg-teal-700/80 px-3 py-1.5 text-[10px] font-medium text-white backdrop-blur-md tabular-nums">
             {project.year}
           </div>
         </div>
 
-        {/* Content area */}
-        <div className="flex flex-col flex-1 p-6">
-          {/* Accent bar — expands on hover */}
+        <div className="flex flex-1 flex-col p-6">
           <motion.div
-            className="h-[3px] bg-teal-700 rounded-full mb-5"
+            className="mb-5 h-[3px] rounded-full bg-teal-700"
             animate={{ width: hovered ? 80 : 48 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          <h3 className="font-display text-xl font-semibold text-teal-800 leading-tight mb-2">
+          <h3 className="mb-2 font-display text-xl font-semibold leading-tight text-teal-800">
             {project.title}
           </h3>
 
-          <p className="text-sm text-teal-800/50 leading-relaxed flex-1">
+          <p className="flex-1 text-sm leading-relaxed text-teal-800/50">
             {project.description}
           </p>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mt-4 mb-4">
+          <div className="mt-4 mb-4 flex flex-wrap gap-1.5">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-full text-[10px] font-medium"
+                className="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-medium text-teal-700"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          {/* View link */}
           <motion.div
-            className="flex items-center gap-2 text-sm font-medium text-teal-700 cursor-pointer"
+            className="flex cursor-pointer items-center gap-2 text-sm font-medium text-teal-700"
             animate={{ x: hovered ? 4 : 0 }}
             transition={{ duration: 0.3 }}
           >
@@ -279,7 +249,7 @@ function ProjectCard({
               animate={{ x: hovered ? 4 : 0, y: hovered ? -2 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="h-4 w-4" />
             </motion.span>
           </motion.div>
         </div>

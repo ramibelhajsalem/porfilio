@@ -1,15 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { siteConfig, footerLinks } from "@/lib/constants";
+import type {
+  FooterContent,
+  NavLink,
+  SiteContent,
+  SocialLink,
+} from "@/content/portfolio.types";
 
-export default function Footer() {
+export default function Footer({
+  site,
+  footer,
+  quickLinks,
+  socialLinks,
+}: {
+  site: SiteContent;
+  footer: FooterContent;
+  quickLinks: NavLink[];
+  socialLinks: SocialLink[];
+}) {
   return (
-    <footer className="relative bg-cream-50 text-teal-800 pt-12 md:pt-16 pb-8 overflow-hidden rounded-2xl">
-      {/* Decorative wave lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
+    <footer className="relative overflow-hidden rounded-2xl bg-cream-50 pt-12 pb-8 text-teal-800 md:pt-16">
+      <div className="pointer-events-none absolute inset-0 opacity-40">
         <svg
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 h-full w-full"
           viewBox="0 0 1200 500"
           fill="none"
           preserveAspectRatio="xMidYMid slice"
@@ -31,38 +45,36 @@ export default function Footer() {
         </svg>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6"
+          className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {/* Email */}
           <div>
-            <p className="text-[0.6rem] text-teal-800/50 uppercase tracking-[0.15em] mb-3">
-              Email me for quick conversation
+            <p className="mb-3 text-[0.6rem] uppercase tracking-[0.15em] text-teal-800/50">
+              {footer.emailLabel}
             </p>
             <a
-              href={`mailto:${siteConfig.email}`}
-              className="text-sm md:text-lg font-bold text-teal-800 hover:text-teal-600 transition-colors uppercase tracking-wide"
+              href={`mailto:${site.email}`}
+              className="text-sm font-bold uppercase tracking-wide text-teal-800 transition-colors hover:text-teal-600 md:text-lg"
             >
-              {siteConfig.email}
+              {site.email}
             </a>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="text-[0.6rem] text-teal-800/50 uppercase tracking-[0.15em] mb-3 font-medium">
-              Quick Links
+            <h4 className="mb-3 text-[0.6rem] font-medium uppercase tracking-[0.15em] text-teal-800/50">
+              {footer.quickLinksTitle}
             </h4>
             <ul className="space-y-1.5">
-              {footerLinks.quickLinks.map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-xs text-teal-800/70 hover:text-teal-700 transition-colors uppercase tracking-wider"
+                    className="text-xs uppercase tracking-wider text-teal-800/70 transition-colors hover:text-teal-700"
                   >
                     {link.label}
                   </a>
@@ -71,31 +83,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Address */}
           <div>
-            <h4 className="text-[0.6rem] text-teal-800/50 uppercase tracking-[0.15em] mb-3 font-medium">
-              Address
+            <h4 className="mb-3 text-[0.6rem] font-medium uppercase tracking-[0.15em] text-teal-800/50">
+              {footer.addressTitle}
             </h4>
-            <div className="text-xs text-teal-800/70 space-y-1 uppercase tracking-wider">
-              <p>{footerLinks.address.street}</p>
-              <p>{footerLinks.address.city}</p>
-              <p>{footerLinks.address.country}</p>
+            <div className="space-y-1 text-xs uppercase tracking-wider text-teal-800/70">
+              <p>{footer.address.street}</p>
+              <p>{footer.address.city}</p>
+              <p>{footer.address.country}</p>
             </div>
           </div>
 
-          {/* Follow */}
           <div>
-            <h4 className="text-[0.6rem] text-teal-800/50 uppercase tracking-[0.15em] mb-3 font-medium">
-              Follow
+            <h4 className="mb-3 text-[0.6rem] font-medium uppercase tracking-[0.15em] text-teal-800/50">
+              {footer.followTitle}
             </h4>
             <ul className="space-y-1.5">
-              {footerLinks.social.map((link) => (
-                <li key={link.name}>
+              {socialLinks.map((link) => (
+                <li key={link.platform}>
                   <a
                     href={link.href}
-                    className="text-xs text-teal-800/70 hover:text-teal-700 transition-colors uppercase tracking-wider"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs uppercase tracking-wider text-teal-800/70 transition-colors hover:text-teal-700"
                   >
-                    {link.name}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -103,16 +115,15 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Bottom Bar */}
         <motion.div
-          className="mt-12 pt-6 border-t border-teal-800/10 text-center"
+          className="mt-12 border-t border-teal-800/10 pt-6 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <p className="text-[0.6rem] text-teal-800/40 uppercase tracking-[0.15em]">
-            &copy;{new Date().getFullYear()} Albert | All Rights Reserved
+          <p className="text-[0.6rem] uppercase tracking-[0.15em] text-teal-800/40">
+            &copy;{new Date().getFullYear()} {footer.copyrightName} | All Rights Reserved
           </p>
         </motion.div>
       </div>

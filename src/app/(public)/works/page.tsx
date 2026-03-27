@@ -4,8 +4,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight, ArrowLeft, ArrowUpLeft } from "lucide-react";
 import Link from "next/link";
-import { projects } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import portfolio from "@/content/portfolio";
 
 /* ─── Gradient backgrounds matching portfolio.html ─── */
 const gradientBgs = [
@@ -23,7 +23,6 @@ const gradientBgs = [
 function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true });
-
   return (
     <section
       ref={ref}
@@ -303,6 +302,7 @@ function MarqueeBar() {
    STICKY LEFT: PROJECT DISPLAY
 ═══════════════════════════════════════ */
 function ProjectDisplay({ activeIndex }: { activeIndex: number }) {
+  const projects = portfolio.projects
   const project = projects[activeIndex];
   const padNum = String(activeIndex + 1).padStart(2, "0");
 
@@ -394,7 +394,7 @@ function ProjectList({
   onScrollActivate: (i: number) => void;
 }) {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-
+  const projects = portfolio.projects
   /* IntersectionObserver — fires when an item enters the middle 20% of viewport */
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -500,7 +500,7 @@ function SwiperSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
+  const projects = portfolio.projects
   /* Responsive cards per view */
   const getCardsPerView = () => (typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3);
   const [cardsPerView, setCardsPerView] = useState(3);
@@ -732,7 +732,7 @@ export default function WorksPage() {
   const [activeProject, setActiveProject] = useState(0);
   const headerRef = useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-60px" });
-
+  const projects = portfolio.projects
   const handleScrollActivate = useCallback((i: number) => {
     setActiveProject(i);
   }, []);
