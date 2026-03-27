@@ -318,14 +318,29 @@ export interface Project {
   category: string;
   description: string;
   imageUrl: string;
+  mainImageUrl?: string;
+  images?: ProjectImage[];
   projectUrl: string;
+  links?: ProjectLink[];
   tags: string[];
+  themes?: string[];
   gradient: string;
   accent: string;
   label: string;
   isFeatured: boolean;
   isHidden: boolean;
   orderIndex: number;
+}
+
+export interface ProjectImage {
+  url: string;
+  alt: string;
+}
+
+export interface ProjectLink {
+  label: string;
+  type: "live" | "github" | "figma" | "template" | "case-study" | "other";
+  url: string;
 }
 
 export interface Testimonial {

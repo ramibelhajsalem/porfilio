@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight, ArrowLeft, ArrowUpLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import portfolio from "@/content/portfolio";
@@ -18,6 +19,10 @@ const gradientBgs = [
   "bg-gradient-to-br from-[#4f7a2d] to-[#3a5c1a]",
   "bg-gradient-to-br from-[#7a2d4f] to-[#5c1a3a]",
 ];
+
+function getProjectMainImage(project: (typeof portfolio.projects)[number]) {
+  return project.mainImageUrl || project.images?.[0]?.url || project.imageUrl;
+}
 
 /* ═══════════════════════════════════════
    HERO SECTION (portfolio.html style)
@@ -312,12 +317,14 @@ function ProjectDisplay({ activeIndex }: { activeIndex: number }) {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           >
-            <span
-              className="font-display text-[clamp(1.75rem,4vw,3.25rem)] tracking-[4px] z-[2] relative"
-              style={{ color: project.accent || "rgba(184,240,42,0.8)" }}
-            >
-              {project.label || project.title.split(" ")[0].toUpperCase()}
-            </span>
+            <Image
+              src={getProjectMainImage(project)}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 480px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
           </motion.div>
         </AnimatePresence>
 
@@ -464,6 +471,19 @@ function ProjectList({
               ))}
             </div>
 
+            {project.themes?.length ? (
+              <div className="mt-3 flex gap-2 flex-wrap">
+                {project.themes.map((theme) => (
+                  <span
+                    key={theme}
+                    className="font-mono text-[10px] tracking-[1px] uppercase px-2.5 py-1 rounded-full bg-black/[0.04] text-teal-800/55"
+                  >
+                    {theme}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+
             {/* Description — expand/collapse */}
             <div
               className={cn(
@@ -474,6 +494,22 @@ function ProjectList({
               <p className="text-sm leading-relaxed text-teal-800/60 max-w-md">
                 {project.description}
               </p>
+
+              {project.links?.length ? (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.links.map((link) => (
+                    <a
+                      key={`${project.id}-${link.type}-${link.label}`}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-mono text-[10px] tracking-[1px] uppercase px-2.5 py-1 border border-black/[0.12] text-teal-800/60 hover:border-teal-700 hover:text-teal-700 transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
         );
@@ -606,14 +642,27 @@ function SwiperSection() {
                 ease: [0.23, 1, 0.32, 1],
               }}
             >
-              {/* Gradient bg + SVG mockup */}
+              {/* Gradient bg + image/mockup */}
               <div
                 className={cn(
-                  "w-full h-full flex flex-col items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.08]",
+                  "w-full h-full flex flex-col items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.08] relative overflow-hidden",
                   gradientBgs[i % gradientBgs.length]
                 )}
               >
-                <SwiperCardSVG index={i} />
+                {getProjectMainImage(project) ? (
+                  <>
+                    <Image
+                      src={getProjectMainImage(project)}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 80vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                  </>
+                ) : (
+                  <SwiperCardSVG index={i} />
+                )}
               </div>
 
               {/* Hover overlay */}

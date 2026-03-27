@@ -28,6 +28,10 @@ const cardVariants = {
   },
 };
 
+function getProjectMainImage(project: Project) {
+  return project.mainImageUrl || project.images?.[0]?.url || project.imageUrl;
+}
+
 export default function Works({
   projects,
   content,
@@ -198,7 +202,7 @@ function ProjectCard({ project }: { project: Project }) {
       >
         <div className="relative h-[280px] overflow-hidden">
           <Image
-            src={project.imageUrl}
+            src={getProjectMainImage(project)}
             alt={project.title}
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
@@ -229,7 +233,7 @@ function ProjectCard({ project }: { project: Project }) {
           </p>
 
           <div className="mt-4 mb-4 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
+            {(project.themes?.length ? project.themes : project.tags).map((tag) => (
               <span
                 key={tag}
                 className="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-medium text-teal-700"
@@ -239,19 +243,21 @@ function ProjectCard({ project }: { project: Project }) {
             ))}
           </div>
 
-          <motion.div
-            className="flex cursor-pointer items-center gap-2 text-sm font-medium text-teal-700"
-            animate={{ x: hovered ? 4 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            VIEW PROJECT
-            <motion.span
-              animate={{ x: hovered ? 4 : 0, y: hovered ? -2 : 0 }}
+          <Link href={project.projectUrl} target="_blank" rel="noreferrer">
+            <motion.div
+              className="flex cursor-pointer items-center gap-2 text-sm font-medium text-teal-700"
+              animate={{ x: hovered ? 4 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              <ArrowUpRight className="h-4 w-4" />
-            </motion.span>
-          </motion.div>
+              VIEW PROJECT
+              <motion.span
+                animate={{ x: hovered ? 4 : 0, y: hovered ? -2 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ArrowUpRight className="h-4 w-4" />
+              </motion.span>
+            </motion.div>
+          </Link>
         </div>
       </motion.div>
     </motion.div>
