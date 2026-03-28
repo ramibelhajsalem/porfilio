@@ -235,7 +235,7 @@ export const portfolio = {
       description:
         "Android R&D Engineer with 6+ years building high-performance apps using Kotlin & Jetpack Compose. Available for fintech, telecom & SaaS projects.",
       author: "Nidhal Belhaj Salem",
-      url: "https://yourdomain.com",
+      url: "https://porfilio-hazel.vercel.app",
       locale: "fr_MA",
       robots: "index, follow",
       keywords: [
