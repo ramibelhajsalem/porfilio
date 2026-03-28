@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import { Geist, Geist_Mono, Space_Grotesk, Dancing_Script } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ToastProvider } from "@/hooks/use-toast";
@@ -64,6 +65,9 @@ export async function generateMetadata(): Promise<Metadata> {
       creator: seo.twitterHandle || undefined,
       images: seo.ogImage ? [seo.ogImage] : undefined,
     },
+    verification: {
+      google: "N8tFV0yT8-WqRifDa5rAfrDnjUJFt95Ja3oG3-jPvqk",
+    },
   };
 }
 
@@ -88,6 +92,15 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${caveat.variable} ${dancingScript.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col" style={themeStyle}>
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "w2k4dm0llp");
+          `}
+        </Script>
         <ToastProvider>
           {children}
           <Toaster />

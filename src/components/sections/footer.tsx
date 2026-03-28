@@ -55,12 +55,12 @@ export default function Footer({
           viewport={{ once: true }}
         >
           <div>
-            <p className="mb-3 text-[0.6rem] uppercase tracking-[0.15em] text-teal-800/50">
+            <p className="text-[0.6rem] uppercase tracking-[0.15em] text-teal-800/50">
               {footer.emailLabel}
             </p>
             <a
               href={`mailto:${email}`}
-              className="text-sm font-bold uppercase tracking-wide text-teal-800 transition-colors hover:text-teal-600 md:text-lg"
+              className="text-sm font-bold uppercase tracking-wide text-teal-800 transition-colors hover:text-teal-600 md:text"
             >
               {email}
             </a>

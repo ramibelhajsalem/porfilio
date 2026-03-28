@@ -18,7 +18,7 @@ export default function Testimonials({
   testimonials: Testimonial[];
 }) {
   return (
-    <section id="testimonials" className="bg-cream-50 py-16 md:py-24">
+    <section id="testimonials" className="bg-cream-50 py-16 md:py-24 hidden">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <motion.h2
           className="mb-14 text-center font-display text-[2rem] font-bold uppercase leading-[0.85] tracking-tighter text-teal-700 md:mb-20 md:text-[3.5rem] lg:text-[5rem]"

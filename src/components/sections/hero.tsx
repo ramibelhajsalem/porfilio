@@ -72,7 +72,7 @@ export default function Hero({
           </motion.div>
 
           <motion.div
-            className="text-center lg:col-span-4 lg:text-left"
+            className="text-center lg:col-span-4 lg:text-left z-30"
             initial={{ x: -80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
