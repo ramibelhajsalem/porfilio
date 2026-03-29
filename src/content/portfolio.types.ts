@@ -164,10 +164,46 @@ export interface FooterContent {
   };
 }
 
+export interface AboutPageContent {
+  backToHomeLabel: string;
+  hero: {
+    eyebrow: string;
+    headingLine1: string;
+    headingLine2: string;
+    headingLine3: string;
+    description: string;
+    stats: Array<{ num: string; label: string }>;
+  };
+  experience: {
+    eyebrow: string;
+    heading: string;
+  };
+  education: {
+    eyebrow: string;
+    heading: string;
+  };
+  skills: {
+    eyebrow: string;
+    heading: string;
+    categories: Array<{ key: keyof ResumeSkills; label: string }>;
+  };
+  languages: {
+    eyebrow: string;
+    heading: string;
+  };
+  cta: {
+    heading: string;
+    description: string;
+    buttonLabel: string;
+    buttonHref: string;
+  };
+}
+
 export interface PagesContent {
   home: HomePageContent;
   works: WorksPageContent;
   contact: ContactPageContent;
+  about: AboutPageContent;
 }
 
 export interface HomePageContent {

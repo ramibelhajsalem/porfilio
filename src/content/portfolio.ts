@@ -8,7 +8,7 @@ export const portfolio = {
       lastName: "Belhaj Salem",
       displayName: "Nidhal",
       fullName: "Nidhal Belhaj Salem",
-      headline: "Ingénieur R&D Mobile Android",
+      headline: "Mobile Android R&D Engineer",
       subtitle: "Mobile-Android-Developer",
       avatar: {
         url: "/images/user1.png",
@@ -19,7 +19,7 @@ export const portfolio = {
     summary: {
       short: "Android R&D engineer with 6+ years of experience building modern, optimized mobile applications.",
       long:
-        "Ingénieur étude & développement mobile Android avec plus de 6 ans d'expérience dans l'ingénierie des applications mobiles en cycle V et Agile. Passionné par l'innovation technologique et la R&D, je suis à la recherche d'opportunités dans le domaine numérique, avec une expertise dans la conception et le développement d'applications Android modernes et optimisées.",
+        "Mobile Android R&D Engineer with over 6 years of experience in mobile application engineering using V-cycle and Agile methodologies. Passionate about technological innovation and R&D, I am seeking opportunities in the digital space, with expertise in designing and developing modern, optimized Android applications.",
     },
 
     contact: {
@@ -28,10 +28,10 @@ export const portfolio = {
       phone: "+212 707747725",
       website: "https://porfilio-hazel.vercel.app",
       location: {
-        label: "Casablanca, Maroc",
+        label: "Casablanca, Morocco",
         detail: "Available for remote collaborations worldwide",
         city: "Casablanca",
-        country: "Maroc",
+        country: "Morocco",
         timezone: "Africa/Casablanca",
       },
       responseTime: "24 hours",
@@ -55,131 +55,131 @@ export const portfolio = {
     experience: [
       {
         id: "exp-attijariwafa",
-        role: "Ingénieur R&D Mobile Android",
+        role: "Mobile Android R&D Engineer",
         company: "Attijariwafa Bank – Babel",
         employmentType: "Full-time",
         start: "2024-03",
         end: "Present",
-        location: "Casablanca, Maroc",
+        location: "Casablanca, Morocco",
         summary:
-          "Refonte de l'application Attijari Particulier. Développement des interfaces Android avec les nouvelles technologies Android, intégration d'APIs et gestion des notifications.",
+          "Full redesign of the Attijari Particulier application. Development of Android interfaces using the latest Android technologies, API integration, and notification management.",
         achievements: [
-          "Refonte de l'application Attijari Particulier.",
-          "Développement des interfaces Android en utilisant Kotlin et Jetpack Compose.",
-          "Intégration des web services et APIs (Retrofit, Coroutines).",
-          "Gestion des notifications et intégration des services Google Play.",
-          "Participation aux cérémonies agiles (Scrum) et revue de code.",
+          "Full redesign of the Attijari Particulier application.",
+          "Development of Android interfaces using Kotlin and Jetpack Compose.",
+          "Integration of web services and APIs (Retrofit, Coroutines).",
+          "Notification management and Google Play services integration.",
+          "Participation in Agile ceremonies (Scrum) and code reviews.",
         ],
         technologies: ["Kotlin", "Jetpack Compose", "Retrofit", "Coroutines", "MVVM", "Dagger/Hilt", "Firebase Crashlytics", "JUnit"],
       },
       {
         id: "exp-daralamane",
-        role: "Ingénieur R&D Mobile Android",
+        role: "Mobile Android R&D Engineer",
         company: "Dar Al Amane – Babel",
         employmentType: "Full-time",
         start: "2022-06",
         end: "2024-03",
-        location: "Casablanca, Maroc",
+        location: "Casablanca, Morocco",
         summary:
-          "Refonte complète de l'application mobile de Dar Al Amane. Conception des interfaces utilisateur, intégration des services API Google Map et collaboration avec l'équipe Scrum.",
+          "Complete redesign of the Dar Al Amane mobile application. UI design, Google Maps API integration, and collaboration with the Scrum team.",
         achievements: [
-          "Refonte complète de l'application mobile de Dar Al Amane.",
-          "Conception des interfaces utilisateur en Kotlin et Jetpack.",
-          "Intégration des services API Google Map.",
-          "Collaboration avec l'équipe Scrum et revue des user stories.",
-          "Tests unitaires et correction des bugs signalés par l'équipe QA.",
+          "Complete redesign of the Dar Al Amane mobile application.",
+          "User interface design using Kotlin and Jetpack.",
+          "Google Maps API service integration.",
+          "Collaboration with the Scrum team and user story review.",
+          "Unit testing and bug fixing reported by the QA team.",
         ],
         technologies: ["Kotlin", "Jetpack", "MVVM", "Retrofit", "Coroutines", "Koin", "JUnit"],
       },
       {
         id: "exp-cbao",
-        role: "Ingénieur R&D Mobile Android",
+        role: "Mobile Android R&D Engineer",
         company: "ADRIA BUSINESS & TECHNOLOGY – CBAO Groupe Attijariwafa Bank",
         employmentType: "Full-time",
         start: "2022-04",
         end: "2022-06",
-        location: "Casablanca, Maroc",
+        location: "Casablanca, Morocco",
         summary:
-          "Evolution de l'application mobile CBAO. Développement des UI Android, intégration des web services et participation à l'élaboration de l'architecture mobile.",
+          "Evolution of the CBAO mobile application. Android UI development, web service integration, and participation in mobile architecture design.",
         achievements: [
-          "Evolution de l'application mobile CBAO.",
-          "Développement des UI Android et intégration des web services.",
-          "Participation à l'élaboration de l'architecture mobile.",
+          "Evolution of the CBAO mobile application.",
+          "Android UI development and web service integration.",
+          "Participation in mobile architecture design.",
         ],
         technologies: ["Kotlin", "MVVM", "RxJava", "Retrofit", "Git"],
       },
       {
         id: "exp-inwi",
-        role: "Ingénieur R&D Mobile Android",
+        role: "Mobile Android R&D Engineer",
         company: "Mobiblanc – Inwi",
         employmentType: "Full-time",
         start: "2021-09",
         end: "2022-04",
-        location: "Casablanca, Maroc",
+        location: "Casablanca, Morocco",
         summary:
-          "Participation à la refonte de l'application MyInwi, avec un focus sur l'amélioration des performances et de l'expérience utilisateur.",
+          "Participated in the redesign of the MyInwi application, with a focus on performance improvements and user experience.",
         achievements: [
-          "Participation à la refonte de l'application MyInwi.",
-          "Développement des interfaces en suivant les règles Material Design.",
-          "Intégration de services Google Play pour les notifications et la gestion des abonnements.",
-          "Optimisation de l'architecture MVVM en utilisant RxJava pour la gestion asynchrone.",
-          "Collaboration avec les équipes produit et backend pour intégrer de nouvelles APIs via Retrofit.",
+          "Participated in the redesign of the MyInwi application.",
+          "Interface development following Material Design guidelines.",
+          "Integration of Google Play services for notifications and subscription management.",
+          "MVVM architecture optimization using RxJava for asynchronous handling.",
+          "Collaboration with product and backend teams to integrate new APIs via Retrofit.",
         ],
         technologies: ["Kotlin", "MVVM", "Jetpack", "Retrofit", "Dagger", "RxJava", "Firebase Crashlytics"],
       },
       {
         id: "exp-showroomz",
-        role: "Ingénieur R&D Mobile Android",
+        role: "Mobile Android R&D Engineer",
         company: "SHOWROOMZ",
         employmentType: "Full-time",
         start: "2020-03",
         end: "2021-09",
-        location: "Tunisie",
+        location: "Tunisia",
         summary:
-          "Amélioration et maintenance de l'application mobile SHOWROOMZ, géolocalisation via Google Maps, et adoption de l'architecture MVVM avec les composants Jetpack.",
+          "Improvement and maintenance of the SHOWROOMZ mobile app, showroom geolocation via Google Maps, and adoption of MVVM architecture with Jetpack components.",
         achievements: [
-          "Amélioration et maintenance de l'application mobile SHOWROOMZ.",
-          "Développement de la géolocalisation des showrooms via l'API Google Maps.",
-          "Intégration des services Google Play pour les notifications en temps réel.",
-          "Utilisation de Realm pour une gestion efficace des données locales.",
-          "Adoption de l'architecture MVVM avec les composants Jetpack pour une meilleure modularité.",
+          "Improvement and maintenance of the SHOWROOMZ mobile application.",
+          "Development of showroom geolocation using the Google Maps API.",
+          "Integration of Google Play services for real-time notifications.",
+          "Use of Realm for efficient local data management.",
+          "Adoption of MVVM architecture with Jetpack components for better modularity.",
         ],
         technologies: ["Kotlin", "Jetpack", "MVVM", "Retrofit", "Realm", "RxJava", "Google Maps API"],
       },
       {
         id: "exp-openbee",
-        role: "Ingénieur R&D Mobile Android/React Native",
+        role: "Mobile Android/React Native R&D Engineer",
         company: "Open Bee",
         employmentType: "Full-time",
         start: "2019-03",
         end: "2020-03",
-        location: "Tunis, Tunisie",
+        location: "Tunis, Tunisia",
         summary:
-          "Développement de l'application OpenBee Sphère en React Native. Collaboration avec l'équipe pour la revue des User Stories et participation aux cérémonies Agiles.",
+          "Development of the OpenBee Sphère application in React Native. Team collaboration on User Story reviews and participation in Agile ceremonies.",
         achievements: [
-          "Développement de l'application OpenBee Sphère en React Native.",
-          "Collaboration avec l'équipe pour la revue des User Stories et des parcours utilisateurs (UX).",
-          "Participation aux cérémonies Agiles : Sprint Planning, Retrospective, et Stand-Up meetings.",
-          "Intégration des web-services et débogage des anomalies remontées par l'équipe QA.",
-          "Tests de performance et support technique pour l'application Open Bee Mobile.",
+          "Development of the OpenBee Sphère application in React Native.",
+          "Team collaboration on User Story and UX flow reviews.",
+          "Participation in Agile ceremonies: Sprint Planning, Retrospective, and Stand-Up meetings.",
+          "Web service integration and debugging of issues reported by the QA team.",
+          "Performance testing and technical support for the Open Bee Mobile application.",
         ],
         technologies: ["React Native", "Java", "RxJava", "Retrofit", "Realm", "Crashlytics", "Git", "Jira"],
       },
       {
         id: "exp-peak",
-        role: "Développeur Android",
+        role: "Android Developer",
         company: "Peak Technologies",
         employmentType: "Full-time",
         start: "2017-12",
         end: "2019-03",
-        location: "Sousse, Tunisie",
+        location: "Sousse, Tunisia",
         summary:
-          "Développement de l'application mobile Bounou dans le secteur de la finance. Conception des interfaces, intégration des services Google Play et Google Maps.",
+          "Development of the Bounou mobile application in the finance sector. UI design, Google Play and Google Maps service integration.",
         achievements: [
-          "Développement de l'application mobile Bounou dans le secteur de la finance.",
-          "Conception des interfaces utilisateurs Android et intégration des services Google Play et Google Maps.",
-          "Participation à l'élaboration de l'architecture mobile et des spécifications techniques.",
-          "Débogage et gestion des notifications, avec des livraisons hebdomadaires en environnement recette.",
+          "Development of the Bounou mobile application in the finance sector.",
+          "Android user interface design and Google Play and Google Maps service integration.",
+          "Participation in mobile architecture design and technical specifications.",
+          "Debugging and notification management, with weekly releases in the staging environment.",
         ],
         technologies: ["Kotlin", "MVVM", "RxJava", "Jetpack", "Retrofit", "Crashlytics", "Git", "Redmine"],
       },
@@ -188,18 +188,18 @@ export const portfolio = {
       {
         id: "edu-ingenieur",
         school: "EPI-Sousse",
-        degree: "Diplôme d'Ingénieur en Informatique",
+        degree: "Engineering Degree in Computer Science",
         start: "2016",
         end: "2019",
-        location: "Sousse, Tunisie",
+        location: "Sousse, Tunisia",
       },
       {
         id: "edu-licence",
-        school: "Institut Supérieur",
-        degree: "Licence Appliquée en Informatique",
+        school: "Higher Institute",
+        degree: "Applied Bachelor's Degree in Computer Science",
         start: "2013",
         end: "2016",
-        location: "Tunisie",
+        location: "Tunisia",
       },
     ],
     skills: {
@@ -229,18 +229,14 @@ export const portfolio = {
   // Site-level settings like SEO, theme, navigation, and footer labels.
   site: {
     seo: {
-      // Title: 39 chars — primary keyword first, name last for brand recall
       title: "Android Developer | Nidhal Belhaj Salem",
-      // Description: 152 chars — action-oriented, keyword-rich, answers user intent
       description:
         "Android R&D Engineer with 6+ years building high-performance apps using Kotlin & Jetpack Compose. Available for fintech, telecom & SaaS projects.",
       author: "Nidhal Belhaj Salem",
       url: "https://porfilio-hazel.vercel.app",
-      locale: "fr_MA",
+      locale: "en_MA",
       robots: "index, follow",
       keywords: [
-        // ─── FROM ANSWERTHEPUBLIC (fr-FR, "software freelancer") ───────────────
-        // Search Engines cluster — top navigational & informational queries
         "freelance software engineer",
         "software freelancer jobs",
         "software freelancer website",
@@ -251,25 +247,18 @@ export const portfolio = {
         "software developer freelancer website",
         "freelancer software developer",
         "tester jobs freelancer software",
-        // Social Media cluster — hashtag & community signals
         "software engineer freelancer",
         "software developer freelancer",
         "#softwarefreelancer",
         "#softwarefreelancers",
-        // Shopping cluster — hire-intent queries
         "project management software freelancer",
-        // AI Models cluster — emerging intent
-        "comment démarrer son activité de développeur freelance",
-        "comment trouver des plateformes pour freelance",
-
-        // ─── PRIMARY — high-volume, high-intent ────────────────────────────────
+        "how to start a career as a freelance developer",
+        "how to find freelance platforms",
         "Android developer",
         "mobile app developer",
         "Android engineer",
         "freelance Android developer",
         "freelance mobile app developer",
-
-        // ─── TECH-SPECIFIC — searched by CTOs & technical leads ───────────────
         "Kotlin developer",
         "Jetpack Compose developer",
         "MVVM Android",
@@ -280,25 +269,21 @@ export const portfolio = {
         "Firebase Android developer",
         "React Native developer",
         "Android SDK developer",
-
-        // ─── DOMAIN EXPERTISE — industry & sector signals ─────────────────────
         "Android fintech developer",
         "Android banking app developer",
         "Android telecom app developer",
         "custom Android app development",
         "native Android app development",
         "Android app developer for hire",
-
-        // ─── LONG-TAIL — lower competition, higher conversion ──────────────────
         "Android R&D engineer",
-        "senior Android developer Maroc",
-        "développeur Android Casablanca",
-        "développeur Android freelance",
-        "ingénieur mobile Android freelance",
+        "senior Android developer Morocco",
+        "Android developer Casablanca",
+        "freelance Android developer",
+        "freelance mobile Android engineer",
         "Kotlin Jetpack Compose engineer",
-        "développeur Kotlin freelance",
-        "développeur mobile freelance France",
-        "freelance développeur application mobile",
+        "freelance Kotlin developer",
+        "freelance mobile developer",
+        "freelance mobile app developer",
       ],
       ogImage: "/images/user1.png",
       twitterHandle: "@nidhaldev",
@@ -314,25 +299,25 @@ export const portfolio = {
     navigation: {
       main: [
         { label: "Works", href: "/works", openNewTab: false, isActive: true },
-        { label: "About", href: "#about", openNewTab: false, isActive: true },
+        { label: "About", href: "/about", openNewTab: false, isActive: true },
         { label: "Testimonials", href: "#testimonials", openNewTab: false, isActive: true },
         { label: "Contact", href: "/contact", openNewTab: false, isActive: true },
       ],
       footer: [
         { label: "Works", href: "/works", openNewTab: false, isActive: true },
-        { label: "About Me", href: "#about", openNewTab: false, isActive: true },
+        { label: "About Me", href: "/about", openNewTab: false, isActive: true },
         { label: "Testimonials", href: "#testimonials", openNewTab: false, isActive: true },
       ],
     },
     footer: {
-      emailLabel: "Email me for quick conversation",
+      emailLabel: "Email me for a quick conversation",
       quickLinksTitle: "Quick Links",
       addressTitle: "Address",
       followTitle: "Follow",
       address: {
         street: "Casablanca",
         city: "Casablanca",
-        country: "Maroc",
+        country: "Morocco",
       },
     },
   },
@@ -358,7 +343,7 @@ export const portfolio = {
         workExperienceText:
           "6+ years building modern Android applications across fintech, telecom, and SaaS sectors.",
         aboutDescription:
-          "Ingénieur R&D Mobile Android avec une expertise dans la conception d'applications Android modernes, les architectures MVVM et Clean Architecture, et les méthodes Agile.",
+          "Mobile Android R&D Engineer with expertise in designing modern Android applications, MVVM and Clean Architecture patterns, and Agile methodologies.",
         inlineImageUrl: "https://images.unsplash.com/photo-1685062428479-e310b7851de5?w=300&h=300",
         inlineImageAlt: "Abstract 3D element",
         gridImage1Url:
@@ -444,7 +429,7 @@ export const portfolio = {
         headingLine2: "ENGINEER",
         headingLine3: "BY NATURE",
         description:
-          "Ingénieur R&D Mobile Android avec plus de 6 ans d'expérience dans l'ingénierie des applications mobiles en cycle V et Agile. Passionné par l'innovation technologique et la R&D, avec une expertise dans la conception et le développement d'applications Android modernes et optimisées.",
+          "Mobile Android R&D Engineer with over 6 years of experience in mobile application engineering using V-cycle and Agile methodologies. Passionate about technological innovation and R&D, with expertise in designing and developing modern, optimized Android applications.",
         stats: [
           { num: "6+", label: "Years of experience" },
           { num: "10+", label: "Apps shipped" },
@@ -485,6 +470,54 @@ export const portfolio = {
         sendingLabel: "Opening email...",
         successMessage: "Your email client should open with the project details ready to send.",
         subjectPrefix: "Project inquiry",
+      },
+    },
+
+    about: {
+      backToHomeLabel: "Back to home",
+      hero: {
+        eyebrow: "About Me",
+        headingLine1: "BUILDING",
+        headingLine2: "MOBILE",
+        headingLine3: "EXPERIENCES",
+        description:
+          "Mobile Android R&D Engineer with over 6 years of experience in mobile application engineering using V-cycle and Agile methodologies. Passionate about technological innovation and R&D, with expertise in designing and developing modern, optimized Android applications.",
+        stats: [
+          { num: "6+", label: "Years of Experience" },
+          { num: "10+", label: "Apps Shipped" },
+          { num: "7+", label: "Companies" },
+          { num: "3", label: "Languages Spoken" },
+        ],
+      },
+      experience: {
+        eyebrow: "Career Path",
+        heading: "Experience",
+      },
+      education: {
+        eyebrow: "Academic Background",
+        heading: "Education",
+      },
+      skills: {
+        eyebrow: "Technical Arsenal",
+        heading: "Skills",
+        categories: [
+          { key: "featured", label: "Core" },
+          { key: "mobile", label: "Mobile" },
+          { key: "frontend", label: "Frontend" },
+          { key: "backend", label: "Backend & APIs" },
+          { key: "tools", label: "Tools & DevOps" },
+        ],
+      },
+      languages: {
+        eyebrow: "Communication",
+        heading: "Languages",
+      },
+      cta: {
+        heading: "Let's Build Something Together",
+        description:
+          "Always open to new collaborations, product ideas, and ambitious Android mobile builds.",
+        buttonLabel: "Get In Touch",
+        buttonHref: "/contact",
       },
     },
   },
@@ -529,7 +562,7 @@ export const portfolio = {
       year: "2024",
       category: "Fintech Mobile App",
       description:
-        "Refonte complète de l'application bancaire Attijari Particulier avec Jetpack Compose, intégration d'APIs REST et gestion des notifications Google Play.",
+        "Complete redesign of the Attijari Particulier banking application with Jetpack Compose, REST API integration, and Google Play notification management.",
       imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=700&fit=crop",
       projectUrl: "https://example.com/attijari",
       links: [{ label: "Live App", type: "live", url: "https://example.com/attijari" }],
@@ -548,7 +581,7 @@ export const portfolio = {
       year: "2022",
       category: "Telecom Mobile App",
       description:
-        "Refonte de l'application MyInwi avec Material Design, intégration de services Google Play pour les notifications et abonnements, et optimisation des performances MVVM/RxJava.",
+        "Redesign of the MyInwi application with Material Design, Google Play services integration for notifications and subscriptions, and MVVM/RxJava performance optimization.",
       imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=700&fit=crop",
       projectUrl: "https://example.com/myinwi",
       links: [{ label: "Live App", type: "live", url: "https://example.com/myinwi" }],
@@ -567,7 +600,7 @@ export const portfolio = {
       year: "2021",
       category: "Mobile App",
       description:
-        "Application mobile de géolocalisation de showrooms avec Google Maps API, notifications en temps réel, et gestion locale des données avec Realm.",
+        "Showroom geolocation mobile application using the Google Maps API, real-time notifications, and local data management with Realm.",
       imageUrl: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=700&fit=crop",
       projectUrl: "https://example.com/showroomz",
       links: [{ label: "Live App", type: "live", url: "https://example.com/showroomz" }],
@@ -586,7 +619,7 @@ export const portfolio = {
       year: "2020",
       category: "Cross-Platform App",
       description:
-        "Application OpenBee Sphère développée en React Native avec intégration de web-services, tests de performance et participation aux cérémonies Agile.",
+        "OpenBee Sphère application built in React Native with web service integration, performance testing, and participation in Agile ceremonies.",
       imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop",
       projectUrl: "https://example.com/openbee",
       links: [{ label: "Live App", type: "live", url: "https://example.com/openbee" }],

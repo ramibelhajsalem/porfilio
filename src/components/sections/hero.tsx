@@ -79,7 +79,7 @@ export default function Hero({
             style={{ y: frontY, opacity: textOpacity }}
           >
             <span
-              className="font-display text-[15vw] font-bold uppercase leading-[0.85] tracking-[-6px] text-teal-700 sm:text-[12vw] lg:text-[10vw]"
+              className="font-display text-[15vw] font-bold uppercase leading-[0.85] tracking-[-12px] text-teal-700 sm:text-[12vw] lg:text-[8vw]"
               style={{ textShadow: "2px 5px 0px rgba(0,0,0,0.2)" }}
             >
               {content.titleWords[0]}
@@ -125,7 +125,7 @@ export default function Hero({
             style={{ y: endY, opacity: textOpacity }}
           >
             <span
-              className="font-display text-[15vw] font-bold uppercase leading-[0.85] tracking-[-6px] text-teal-700 sm:text-[12vw] lg:text-[10vw]"
+              className="font-display text-[15vw] font-bold uppercase leading-[0.85] tracking-[-12px] text-teal-700 sm:text-[12vw] lg:text-[10vw]"
               style={{ textShadow: "2px 5px 0px rgba(0,0,0,0.2)" }}
             >
               {content.titleWords[1]}
@@ -140,7 +140,7 @@ export default function Hero({
             style={{ y: developerY, opacity: textOpacity }}
           >
             <span
-              className="inline-block font-display text-[13vw] font-bold uppercase leading-none tracking-[-4px] text-teal-700 sm:text-[10vw] lg:text-[9vw]"
+              className="inline-block font-display text-[12vw] font-bold uppercase leading-none tracking-[-4px] text-teal-700 sm:text-[10vw] lg:text-[9vw]"
               style={{ textShadow: "2px 5px 0px rgba(0,0,0,0.2)" }}
             >
               {content.titleWords[2]}
